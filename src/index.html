@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+
+<title>Mythika Roller</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="output.css">
+
+	<body class="flex flex-col p-4 bg-neutral-900 text-neutral-200 text-lg">
+		<div id="input"></div>
+
+		<div class="mt-2 text-center">
+			<button onClick="roll()" class="px-2 bg-neutral-200 text-neutral-900 hover:scale-110">Roll</button>
+			<button onClick="reload()" class="px-2 bg-neutral-200 text-neutral-900 hover:scale-110">Clear</button>
+		</div>
+
+		<div id="output" class="[&>div]:pt-4 whitespace-pre-line text-center"></div>
+	</body>
+
+<script src="toolbox.js"></script>
+<script src="script.js"></script>
+
+</html>
