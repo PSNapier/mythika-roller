@@ -1,25 +1,5 @@
-// INPUT
-const parent1 = {
-	geno: '',
-	rank: 'runt',
-	species: 'velox',
-}
-const parent2 = {
-	geno: '',
-	rank: 'runt',
-	species: 'hexin',
-}
-const selections = {
-	nerosSpirit: false,
-	arativasSpirit: false,
-	mixtureA: false,
-	mixtureB: false,
-	fertilityElk: false,
-	soulApocalypse: false,
-	toleranceCrystal: true,
-}
-
 // OUTPUT
+
 function roll() {
 	document.getElementById('output').innerHTML = ``;
 
@@ -53,8 +33,8 @@ function roll() {
 
 			function checkParents(a, b) {
 				// console.log(a, b);
-				for (let k = 0; k < illegalCrosses.length; k++) {
-					if (illegalCrosses[k].includes(a) && illegalCrosses[k].includes(b)) {
+				for (let k = 0; k < dictionary.speciesIllegalCrosses.length; k++) {
+					if (dictionary.speciesIllegalCrosses[k].includes(a) && dictionary.speciesIllegalCrosses[k].includes(b)) {
 						species = 'illegal cross'
 						return false;
 					}
@@ -65,71 +45,15 @@ function roll() {
 				return false;
 			}
 
-			let dictionary = [
-				'velox',
-				'hexin',
-				'enquisitors',
-				'mishka',
-				'arcid',
-				'mykrons',
-				'zinner',
-				'ziemel',
-				'zephies',
-				'minkins',
-				'funia',
-				'vilkren',
-				'fluffer',
-				'wakanka',
-			]
-			let illegalCrosses = [
-				['velox', 'mykrons'],
-				['velox', 'zephies'],
-				['velox', 'minkins'],
-				['velox', 'funia'],
-				['velox', 'vilkren'],
-				['hexin', 'mykrons'],
-				['hexin', 'zephies'],
-				['hexin', 'minkins'],
-				['hexin', 'funia'],
-				['hexin', 'vilkren'],
-				['mishka', 'arcid'],
-				['mishka', 'mykrons'],
-				['mishka', 'zinner'],
-				['mishka', 'ziemel'],
-				['mishka', 'funia'],
-				['mishka', 'vilkren'],
-				['enquisitors', 'mykrons'],
-				['enquisitors', 'zinner'],
-				['enquisitors', 'ziemel'],
-				['enquisitors', 'zephies'],
-				['enquisitors', 'minkins'],
-				['enquisitors', 'funia'],
-				['enquisitors', 'vilkren'],
-				['arcid', 'mishka'],
-				['arcid', 'zephies'],
-				['arcid', 'minkins'],
-				['arcid', 'vilkren'],
-				['mykrons', 'zephies'],
-				['mykrons', 'minkins'],
-				['mykrons', 'funia'],
-				['mykrons', 'vilkren'],
-				['zinner', 'zephies'],
-				['zinner', 'minkins'],
-				['zinner', 'vilkren'],
-				['ziemel', 'zephies'],
-				['ziemel', 'minkins'],
-				['ziemel', 'vilkren'],
-			]
-
 			main:
-			for (let i = 0; i < dictionary.length; i++) {
-				if (checkParents(dictionary[i], dictionary[i])) {
-					species = dictionary[i];
+			for (let i = 0; i < dictionary.species.length; i++) {
+				if (checkParents(dictionary.species[i], dictionary.species[i])) {
+					species = dictionary.species[i];
 					break;
 				}
-				for (let j = i + 1; j < dictionary.length; j++) {
-					if (checkParents(dictionary[i], dictionary[j])) {
-						species = randomizer([dictionary[i], dictionary[j]]);
+				for (let j = i + 1; j < dictionary.species.length; j++) {
+					if (checkParents(dictionary.species[i], dictionary.species[j])) {
+						species = randomizer([dictionary.species[i], dictionary.species[j]]);
 						break main;
 					}
 				}

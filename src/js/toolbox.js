@@ -1,3 +1,5 @@
+// TOOLBOX
+
 function reload() {
 	window.location.reload();
 }
