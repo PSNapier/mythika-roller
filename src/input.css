@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+select {
+	height: 1.3em;
+	position: relative;
+	top: .15em;
+}

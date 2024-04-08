@@ -558,6 +558,10 @@ video {
   margin-top: 0.5rem;
 }
 
+.flex {
+  display: flex;
+}
+
 .grid {
   display: grid;
 }
@@ -566,8 +570,8 @@ video {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.overflow-scroll {
-  overflow: scroll;
+.justify-center {
+  justify-content: center;
 }
 
 .overflow-y-scroll {
@@ -601,6 +605,14 @@ video {
   padding-right: 0.5rem;
 }
 
+.pr-2 {
+  padding-right: 0.5rem;
+}
+
+.pt-2 {
+  padding-top: 0.5rem;
+}
+
 .text-center {
   text-align: center;
 }
@@ -628,18 +640,16 @@ video {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
+select {
+  height: 1.3em;
+  position: relative;
+  top: .15em;
+}
+
 .hover\:scale-110:hover {
   --tw-scale-x: 1.1;
   --tw-scale-y: 1.1;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.\[\&\>div\]\:flex>div {
-  display: flex;
-}
-
-.\[\&\>div\]\:justify-center>div {
-  justify-content: center;
 }
 
 .\[\&\>div\]\:p-2>div {

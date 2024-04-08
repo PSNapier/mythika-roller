@@ -3,6 +3,35 @@
 function roll() {
 	document.getElementById('output').innerHTML = ``;
 
+	let parent1 = {};
+	let parent2 = {};
+	function getParents() {
+		parent1 = {
+			geno: '',
+			species: document.getElementById('parent1species').value,
+			rank: document.getElementById('parent1rank').value,
+			build: document.getElementById('parent1build').value,
+			earTrait: document.getElementById('parent1eartrait').value,
+			tailTrait: document.getElementById('parent1tailtrait').value,
+			bonusTrait: document.getElementById('parent1bonustrait').value,
+			mutation: document.getElementById('parent1mutation').value,
+			hereditaryTraits: document.getElementById('parent1hereditarytraits').value,
+		}
+		parent2 = {
+			geno: '',
+			species: document.getElementById('parent2species').value,
+			rank: document.getElementById('parent2rank').value,
+			build: document.getElementById('parent2build').value,
+			earTrait: document.getElementById('parent2eartrait').value,
+			tailTrait: document.getElementById('parent2tailtrait').value,
+			bonusTrait: document.getElementById('parent2bonustrait').value,
+			mutation: document.getElementById('parent2mutation').value,
+			hereditaryTraits: document.getElementById('parent2hereditarytraits').value,
+		}
+		console.log(parent1, parent2);
+	}
+	getParents();
+
 	function calcLitterAmount() {
 		let itemCheck = selections.soulApocalypse || selections.fertilityElk;
 		if (itemCheck && rng(100) <= 40) {
@@ -34,7 +63,7 @@ function roll() {
 			function checkParents(a, b) {
 				// console.log(a, b);
 				for (let k = 0; k < dictionary.speciesIllegalCrosses.length; k++) {
-					if (dictionary.speciesIllegalCrosses[k].includes(a) && dictionary.speciesIllegalCrosses[k].includes(b)) {
+					if (a !== b && dictionary.speciesIllegalCrosses[k].includes(a) && dictionary.speciesIllegalCrosses[k].includes(b)) {
 						species = 'illegal cross'
 						return false;
 					}
