@@ -5,29 +5,22 @@ function roll() {
 
 	let parent1 = {};
 	let parent2 = {};
+	function getParentData(parentId) {
+		return {
+			geno: '',
+			species: document.getElementById(`${parentId}species`).value,
+			rank: document.getElementById(`${parentId}rank`).value,
+			build: document.getElementById(`${parentId}build`).value,
+			earTrait: document.getElementById(`${parentId}eartrait`).value,
+			tailTrait: document.getElementById(`${parentId}tailtrait`).value,
+			bonusTrait: document.getElementById(`${parentId}bonustrait`).value,
+			mutation: document.getElementById(`${parentId}mutation`).value,
+			hereditaryTraits: document.getElementById(`${parentId}hereditarytraits`).value,
+		};
+	}
 	function getParents() {
-		parent1 = {
-			geno: '',
-			species: document.getElementById('parent1species').value,
-			rank: document.getElementById('parent1rank').value,
-			build: document.getElementById('parent1build').value,
-			earTrait: document.getElementById('parent1eartrait').value,
-			tailTrait: document.getElementById('parent1tailtrait').value,
-			bonusTrait: document.getElementById('parent1bonustrait').value,
-			mutation: document.getElementById('parent1mutation').value,
-			hereditaryTraits: document.getElementById('parent1hereditarytraits').value,
-		}
-		parent2 = {
-			geno: '',
-			species: document.getElementById('parent2species').value,
-			rank: document.getElementById('parent2rank').value,
-			build: document.getElementById('parent2build').value,
-			earTrait: document.getElementById('parent2eartrait').value,
-			tailTrait: document.getElementById('parent2tailtrait').value,
-			bonusTrait: document.getElementById('parent2bonustrait').value,
-			mutation: document.getElementById('parent2mutation').value,
-			hereditaryTraits: document.getElementById('parent2hereditarytraits').value,
-		}
+		parent1 = getParentData('parent1');
+		parent2 = getParentData('parent2');
 		console.log(parent1, parent2);
 	}
 	getParents();
