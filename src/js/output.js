@@ -91,7 +91,11 @@ function roll() {
 			return species.capitalizeStr();
 		}
 
-		let output = `${mythikaCount}) ${rollSpecies()}, Gender, Status, ___ Rank
+		function rollGender() {
+			return randomizer(['female', 'male']).capitalizeStr();
+		}
+
+		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, Status, ___ Rank
 		B: ___ Build, ____ Ears, ____ Tail, ___ Bonus Trait
 		M: (Mutation)
 		G: (Genotype)
