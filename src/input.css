@@ -7,3 +7,9 @@ select {
 	position: relative;
 	top: .15em;
 }
+
+input[type="checkbox"] {
+	vertical-align: middle;
+	width: .9em;
+	margin-right: .4em;
+}

@@ -566,8 +566,20 @@ video {
   display: grid;
 }
 
-.grid-cols-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.grow {
+  flex-grow: 1;
+}
+
+.grid-flow-col {
+  grid-auto-flow: column;
+}
+
+.grid-flow-col-dense {
+  grid-auto-flow: column dense;
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .justify-center {
@@ -622,6 +634,11 @@ video {
   line-height: 1.75rem;
 }
 
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 .capitalize {
   text-transform: capitalize;
 }
@@ -644,6 +661,12 @@ select {
   height: 1.3em;
   position: relative;
   top: .15em;
+}
+
+input[type="checkbox"] {
+  vertical-align: middle;
+  width: .9em;
+  margin-right: .4em;
 }
 
 .hover\:scale-110:hover {

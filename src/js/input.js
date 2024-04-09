@@ -73,13 +73,40 @@ addSelect('bonus trait', dictionary.physicalTraits.bonus);
 addSelect('mutation', dictionary.mutations.random);
 addSelect('hereditary traits', dictionary.hereditaryTraits);
 
+const items = [
+	'nero\'s luck',
+	'arativa\'s spirit',
+	'solasdrake',
+	'shadowsdrake',
+	'furion',
+	'shellpin',
+	'stamvaul',
+	'tolerance crystal',
+];
+const pets = [
+	'behopheonix',
+	'rune spirit',
+	'fertility elk',
+];
 
-const selections = {
-	nerosSpirit: false,
-	arativasSpirit: false,
-	mixtureA: false,
-	mixtureB: false,
-	fertilityElk: false,
-	soulApocalypse: false,
-	toleranceCrystal: true,
+function addItems(id, dict) {
+	for (let i = 0; i < dict.length; i++) {
+		let wrapper = document.createElement('div');
+		wrapper.classList.add('flex', 'pt-2', 'justify-center');
+
+		let checkbox = document.createElement('input');
+		checkbox.type = 'checkbox';
+		checkbox.id = dict[i].replace(' ', '').replace('\'', '');
+		wrapper.appendChild(checkbox);
+
+		let label = document.createElement('div');
+		label.classList.add('pr-2');
+		label.innerText = `${dict[i].capitalizeStr()}`;
+		wrapper.appendChild(label);
+
+		document.getElementById(id).appendChild(wrapper);
+	}
 }
+
+addItems('selections', items);
+addItems('selections', pets);

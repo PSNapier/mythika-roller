@@ -21,9 +21,28 @@ function roll() {
 	function getParents() {
 		parent1 = getParentData('parent1');
 		parent2 = getParentData('parent2');
-		console.log(parent1, parent2);
+		// console.log(parent1, parent2);
 	}
 	getParents();
+
+	let selections = {};
+	function getSelections() {
+		return {
+			nerosLuck: document.getElementById(`nerosluck`).checked,
+			arativasSpirit: document.getElementById(`arativasspirit`).checked,
+			solasdrake: document.getElementById(`solasdrake`).checked,
+			shadowsdrake: document.getElementById(`shadowsdrake`).checked,
+			furion: document.getElementById(`furion`).checked,
+			shellpin: document.getElementById(`shellpin`).checked,
+			stamvaul: document.getElementById(`stamvaul`).checked,
+			toleranceCrystal: document.getElementById(`tolerancecrystal`).checked,
+			behophenoix: document.getElementById(`behopheonix`).checked,
+			runeSpirit: document.getElementById(`runespirit`).checked,
+			fertilityElk: document.getElementById(`fertilityelk`).checked,
+		}
+	}
+	selections = getSelections();
+	console.log(selections);
 
 	function calcLitterAmount() {
 		let itemCheck = selections.soulApocalypse || selections.fertilityElk;
