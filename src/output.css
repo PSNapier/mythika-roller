@@ -566,18 +566,6 @@ video {
   display: grid;
 }
 
-.grow {
-  flex-grow: 1;
-}
-
-.grid-flow-col {
-  grid-auto-flow: column;
-}
-
-.grid-flow-col-dense {
-  grid-auto-flow: column dense;
-}
-
 .grid-cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -627,16 +615,6 @@ video {
 
 .text-center {
   text-align: center;
-}
-
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-
-.text-sm {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
 }
 
 .capitalize {
