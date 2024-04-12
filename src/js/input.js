@@ -82,6 +82,8 @@ const items = [
 	'shellpin',
 	'stamvaul',
 	'tolerance crystal',
+	'unknown mixture a',
+	'unknown mixture b',
 ];
 const pets = [
 	'behopheonix',
@@ -96,7 +98,7 @@ function addItems(id, dict) {
 
 		let checkbox = document.createElement('input');
 		checkbox.type = 'checkbox';
-		checkbox.id = dict[i].replace(' ', '').replace('\'', '');
+		checkbox.id = dict[i].replace(/\s/g, '').replace(/\'/g, '');
 		wrapper.appendChild(checkbox);
 
 		let label = document.createElement('div');

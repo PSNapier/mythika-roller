@@ -14,8 +14,8 @@ var dictionary = {
 		'minkins',
 		'funia',
 		'vilkren',
-		'fluffer',
-		'wakanka',
+		// 'fluffer',
+		// 'wakanka',
 	],
 	speciesIllegalCrosses: [
 		['velox', 'mykrons'],

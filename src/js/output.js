@@ -39,10 +39,12 @@ function roll() {
 			behophenoix: document.getElementById(`behopheonix`).checked,
 			runeSpirit: document.getElementById(`runespirit`).checked,
 			fertilityElk: document.getElementById(`fertilityelk`).checked,
+			unknownMixtureA: document.getElementById(`unknownmixturea`).checked,
+			unknownMixtureB: document.getElementById(`unknownmixtureb`).checked,
 		}
 	}
 	selections = getSelections();
-	console.log(selections);
+	// console.log(selections);
 
 	function calcLitterAmount() {
 		let itemCheck = selections.soulApocalypse || selections.fertilityElk;
@@ -104,11 +106,44 @@ function roll() {
 		}
 
 		function rollGender() {
-			return randomizer(['female', 'male']).capitalizeStr();
+			if (selections.unknownMixtureA) {
+				return 'Male';
+			}
+			else if (selections.unknownMixtureB) {
+				return 'Female';
+			}
+			else if (selections.arativasSpirit) {
+				return rng(100) <= 60 ? 'Female' : 'Male';
+			}
+			else if (selections.nerosLuck) {
+				return rng(100) <= 60 ? 'Male' : 'Female';
+			}
+			else {
+				return randomizer(['Female', 'Male']);
+			}
 		}
 
-		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, Status, ___ Rank
-		B: ___ Build, ____ Ears, ____ Tail, ___ Bonus Trait
+		function rollRank() {
+			if (parent1.rank === 'runt' || parent2.rank === 'runt') {
+				return 'Runt';
+			}
+			else if (parent1.rank === 'omega' || parent2.rank === 'omega') {
+				return 'Runt';
+			}
+			else if (parent1.rank === 'beta' || parent2.rank === 'beta') {
+				return rng(100) <= 5 ? 'Omega' : 'Runt';
+			}
+			else if (parent1.rank === 'alpha' || parent2.rank === 'alpha') {
+				return rng(100) <= 30 ? 'Omega' : 'Runt';
+			}
+		}
+
+		function rollBuild() {
+			console.log(Object.keys(dictionary.build).find(key => dictionary.build[key].includes('satin')));
+		}
+
+		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, Status, ${rollRank()} Rank
+		B: ${rollBuild()} Build, ____ Ears, ____ Tail, ___ Bonus Trait
 		M: (Mutation)
 		G: (Genotype)
 		P: (Phenotype)
