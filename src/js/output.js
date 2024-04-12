@@ -136,14 +136,46 @@ function roll() {
 			else if (parent1.rank === 'alpha' || parent2.rank === 'alpha') {
 				return rng(100) <= 30 ? 'Omega' : 'Runt';
 			}
+			else {
+				return 'Runt';
+			}
 		}
 
 		function rollBuild() {
-			console.log(Object.keys(dictionary.build).find(key => dictionary.build[key].includes('satin')));
+			return '____';
+			// console.log(Object.keys(dictionary.build).find(key => dictionary.build[key].includes('satin')));
+
+			let parent1Rarity = Object.keys(dictionary.build).find(key => dictionary.build[key].includes(parent1.build));
+			let parent2Rarity = Object.keys(dictionary.build).find(key => dictionary.build[key].includes(parent2.build));
+
+			// common x common || uncommon x uncommon || rare x rare
+			if (parent1Rarity === 'common' && parent2Rarity === 'common' || 
+			parent1Rarity === 'uncommon' && parent2Rarity === 'uncommon' || 
+			parent1Rarity === 'rare' && parent2Rarity === 'rare') {
+				return randomizer([parent1, parent2]);
+			}
+			// uncommon x common
+			else if (parent1Rarity === 'uncommon' && parent2Rarity === 'common' || parent1Rarity === 'common' && parent2Rarity === 'uncommon') {
+				if (rng(100) <= 25) {
+
+				}
+			}
+			// rare x common
+			else if (parent1Rarity === 'rare' && parent2Rarity === 'common' || parent1Rarity === 'common' && parent2Rarity === 'rare') {
+				if (rng(100) <= 10) {
+
+				}
+			}
+			// rare x uncommon
+			else if (parent1Rarity === 'rare' && parent2Rarity === 'uncommon' || parent1Rarity === 'uncommon' && parent2Rarity === 'rare') {
+				if (rng(100) <= 20) {
+
+				}
+			}
 		}
 
 		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, Status, ${rollRank()} Rank
-		B: ${rollBuild()} Build, ____ Ears, ____ Tail, ___ Bonus Trait
+		B: ${rollBuild().capitalizeStr()} Build, ____ Ears, ____ Tail, ___ Bonus Trait
 		M: (Mutation)
 		G: (Genotype)
 		P: (Phenotype)
