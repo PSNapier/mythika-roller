@@ -7,7 +7,7 @@ function roll() {
 	let parent2 = {};
 	function getParentData(parentId) {
 		return {
-			geno: '',
+			geno: document.getElementById(`${parentId}geno`).value,
 			species: document.getElementById(`${parentId}species`).value,
 			rank: document.getElementById(`${parentId}rank`).value,
 			build: document.getElementById(`${parentId}build`).value,
@@ -174,10 +174,14 @@ function roll() {
 			}
 		}
 
+		function rollGeno() {
+			return '____';
+		}
+
 		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, Status, ${rollRank()} Rank
 		B: ${rollBuild().capitalizeStr()} Build, ____ Ears, ____ Tail, ___ Bonus Trait
 		M: (Mutation)
-		G: (Genotype)
+		G: ${rollGeno()}
 		P: (Phenotype)
 		Skills: +1 Attack, +1 Speed, +1 Defence
 		Runes: +1 Elemancy, +1 Medic, +1 Dark, +1 Void

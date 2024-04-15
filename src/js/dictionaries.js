@@ -95,13 +95,13 @@ var dictionary = {
 	},
 	coatColours: {
 		common: [
-			'daybreak',
+			['daybreak','day'],
 		],
 		uncommon: [
-			'ocean',
+			['ocean','oce'],
 		],
 		rare: [
-			'midnight',
+			['midnight','mid'],
 		],
 	},
 	markings: {

@@ -1,7 +1,26 @@
 // INPUT
 
-// auto populate parents
-// go through dictionary and populate input UI based upon available options
+function addGeno() {
+	['parent1', 'parent2'].forEach((parent) => {
+		let wrapper = document.createElement('div');
+		wrapper.classList.add('flex', 'pt-2', 'justify-center');
+
+		let label = document.createElement('div');
+		label.classList.add('pr-2');
+		label.innerText = `Geno`;
+		wrapper.appendChild(label);
+
+		let input = document.createElement('input');
+		input.id = `${parent}geno`;
+		input.type = 'text';
+		input.classList.add('text-neutral-900');
+		wrapper.appendChild(input);
+
+		document.getElementById(parent).appendChild(wrapper);
+	})
+}
+
+addGeno();
 
 function addSelect(id, dict) {
 	['parent1','parent2'].forEach((parent) => {
