@@ -175,9 +175,6 @@ function roll() {
 		}
 
 		function rollGeno() {
-
-			console.log(parent1.geno, parent2.geno);
-
 			// function legalCoatColour(parent) {
 			// 	for (let key in dictionary.coatColours) {
 			// 		for (let i = 0; i < key.length; i++) {
@@ -201,24 +198,27 @@ function roll() {
 
 			// markings
 			let markings = [];
-			[parent1, parent2].forEach((parent) => {
+
+			function shouldPushMarking(key) {
+				const probabilities = {
+					'common': 40,
+					'uncommon': 20,
+					'rare': 10,
+					'unique': 5
+				};
+
+				return rng(100) <= probabilities[key];
+			}
+
+			[parent1, parent2].forEach(parent => {
 				for (let key in dictionary.markings) {
-					for (let i = 0; i < dictionary.markings[key].length; i++) {
-						// console.log(dictionary.markings[key][i]);
-						if (parent.geno.indexOf(dictionary.markings[key][i][1]) !== -1) {
-							// console.log(key);
-							if (
-								(key === 'common' && rng(100) <= 40) ||
-								(key === 'uncommon' && rng(100) <= 20) ||
-								(key === 'rare' && rng(100) <= 10) ||
-								(key === 'unique' && rng(100) <= 5)
-							) {
-								markings.push(dictionary.markings[key][i][1]);
-							}
+					dictionary.markings[key].forEach(marking => {
+						if (parent.geno.includes(marking[1]) && shouldPushMarking(key)) {
+							markings.push(marking[1]);
 						}
-					}
+					});
 				}
-			})
+			});
 
 			markings = markings.filter(onlyUnique).sortByArray(dictionary.markingsSorted);
 
