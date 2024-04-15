@@ -138,6 +138,7 @@ var dictionary = {
 			['void','Voi'],
 		],
 	},
+	markingsSorted: [],
 	hereditaryTraits: {
 		common: [
 			'hunter',
@@ -209,4 +210,10 @@ var dictionary = {
 			'dragon vines',
 		],
 	},
+}
+
+for (let key in dictionary.markings) {
+	for (let i = 0; i < dictionary.markings[key].length; i++) {
+		dictionary.markingsSorted.push(dictionary.markings[key][i][1]);
+	}
 }

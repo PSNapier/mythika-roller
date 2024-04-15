@@ -175,7 +175,6 @@ function roll() {
 		}
 
 		function rollGeno() {
-			let output = [];
 
 			console.log(parent1.geno, parent2.geno);
 
@@ -200,11 +199,30 @@ function roll() {
 				// console.log(parent1Rarity, parent2Rarity);
 			}
 
-			function rollMarkings() {
+			// markings
+			let markings = [];
+			[parent1, parent2].forEach((parent) => {
+				for (let key in dictionary.markings) {
+					for (let i = 0; i < dictionary.markings[key].length; i++) {
+						// console.log(dictionary.markings[key][i]);
+						if (parent.geno.indexOf(dictionary.markings[key][i][1]) !== -1) {
+							// console.log(key);
+							if (
+								(key === 'common' && rng(100) <= 40) ||
+								(key === 'uncommon' && rng(100) <= 20) ||
+								(key === 'rare' && rng(100) <= 10) ||
+								(key === 'unique' && rng(100) <= 5)
+							) {
+								markings.push(dictionary.markings[key][i][1]);
+							}
+						}
+					}
+				}
+			})
 
-			}	
+			markings = markings.filter(onlyUnique).sortByArray(dictionary.markingsSorted);
 
-			return output.join('/');
+			return markings.join('/');
 		}
 
 		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, Status, ${rollRank()} Rank

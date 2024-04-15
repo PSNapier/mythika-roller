@@ -30,6 +30,16 @@ function onlyUnique(value, index, self) {
 // let a = ['a', 1, 'a', 2, '1'];
 // let unique = a.filter( onlyUnique );// returns ['a', 1, 2, '1']
 
+// const arrayToSort = ['apple', 'banana', 'cherry', 'date'];
+// const sortOrder = ['banana', 'date', 'apple', 'cherry'];
+// const sortedArray = arrayToSort.sortByArray(sortOrder);
+// console.log(sortedArray);
+Array.prototype.sortByArray = function(orderArr) {
+    const map = new Map();
+    orderArr.forEach((val, index) => map.set(val, index));
+    return this.sort((a, b) => map.get(a) - map.get(b));
+};
+
 // string.capitalizeStr();
 // TODO: capitalize no worky with opening parenthesis even though regexr says it should?
 String.prototype.capitalizeStr = function() {
