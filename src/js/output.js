@@ -7,7 +7,7 @@ function roll() {
 	let parent2 = {};
 	function getParentData(parentId) {
 		return {
-			geno: document.getElementById(`${parentId}geno`).value,
+			geno: document.getElementById(`${parentId}geno`).value.split('/'),
 			species: document.getElementById(`${parentId}species`).value,
 			rank: document.getElementById(`${parentId}rank`).value,
 			build: document.getElementById(`${parentId}build`).value,
@@ -175,7 +175,36 @@ function roll() {
 		}
 
 		function rollGeno() {
-			return '____';
+			let output = [];
+
+			console.log(parent1.geno, parent2.geno);
+
+			// function legalCoatColour(parent) {
+			// 	for (let key in dictionary.coatColours) {
+			// 		for (let i = 0; i < key.length; i++) {
+			// 			if (parent.geno.indexOf(key[i]) !== -1) {
+			// 				return true;
+			// 			}
+			// 		}
+			// 	}
+			// 	return false;
+			// }
+
+			// if (!legalCoatColour(parent1)) {
+
+			// }
+
+			function rollCoat() {
+				// let parent1Rarity = Object.keys(dictionary.coatColours).find(key => dictionary.coatColours[key].includes(parent1.geno[0]));
+				// let parent2Rarity = Object.keys(dictionary.coatColours).find(key => dictionary.coatColours[key].includes(parent2.geno[0]));
+				// console.log(parent1Rarity, parent2Rarity);
+			}
+
+			function rollMarkings() {
+
+			}	
+
+			return output.join('/');
 		}
 
 		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, Status, ${rollRank()} Rank
