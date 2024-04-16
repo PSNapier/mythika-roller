@@ -175,30 +175,52 @@ function roll() {
 		}
 
 		function rollGeno() {
-			// function legalCoatColour(parent) {
-			// 	for (let key in dictionary.coatColours) {
-			// 		for (let i = 0; i < key.length; i++) {
-			// 			if (parent.geno.indexOf(key[i]) !== -1) {
-			// 				return true;
-			// 			}
-			// 		}
-			// 	}
-			// 	return false;
-			// }
-
-			// if (!legalCoatColour(parent1)) {
-
-			// }
-
-			function rollCoat() {
-				// let parent1Rarity = Object.keys(dictionary.coatColours).find(key => dictionary.coatColours[key].includes(parent1.geno[0]));
-				// let parent2Rarity = Object.keys(dictionary.coatColours).find(key => dictionary.coatColours[key].includes(parent2.geno[0]));
-				// console.log(parent1Rarity, parent2Rarity);
+			// coat colour
+			let parent1Coat = {
+				rarity: '',
+				gene: '',
 			}
+			let parent2Coat = {
+				rarity: '',
+				gene: '',
+			}
+			for (let key in dictionary.coatColours) {
+				dictionary.coatColours[key].forEach(coat => {
+					if (parent1.geno.includes(coat[1])) {
+						parent1Coat.gene = coat[1];
+						parent1Coat.rarity = key;
+					}
+					if (parent2.geno.includes(coat[1])) {
+						parent2Coat.gene = coat[1];
+						parent2Coat.rarity = key;
+					}
+				});
+			}
+
+			let coat = ''
+			let coatProbabilities = [
+				// [gene1, gene2, probability of rolling gene2]
+				['common','common', 100],
+				['common','uncommon', 25],
+				['common','rare', 10],
+				['uncommon','uncommon', 100],
+				['uncommon','rare', 40],
+				['rare','rare', 100],
+			];
+			coatProbabilities.forEach(([rarity1, rarity2, probability]) => {
+				if (parent1Coat.rarity === parent2Coat.rarity) {
+					coat = randomizer([parent1Coat.gene, parent2Coat.gene]);
+				}
+				else if (parent1Coat.rarity === rarity1 && parent2Coat.rarity === rarity2) {
+					coat = rng(100) <= probability ? parent2Coat.gene : parent1Coat.gene;
+				}
+				else if (parent1Coat.rarity === rarity2 && parent2Coat.rarity === rarity1) {
+					coat = rng(100) <= probability ? parent1Coat.gene : parent2Coat.gene;
+				}
+			});
 
 			// markings
 			let markings = [];
-
 			function shouldPushMarking(key) {
 				const probabilities = {
 					'common': 40,
@@ -209,7 +231,6 @@ function roll() {
 
 				return rng(100) <= probabilities[key];
 			}
-
 			[parent1, parent2].forEach(parent => {
 				for (let key in dictionary.markings) {
 					dictionary.markings[key].forEach(marking => {
@@ -219,10 +240,8 @@ function roll() {
 					});
 				}
 			});
-
-			markings = markings.filter(onlyUnique).sortByArray(dictionary.markingsSorted);
-
-			return markings.join('/');
+			
+			return [coat, ...markings.filter(onlyUnique).sortByArray(dictionary.markingsSorted)].join('/');
 		}
 
 		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, Status, ${rollRank()} Rank
