@@ -142,36 +142,51 @@ function roll() {
 		}
 
 		function rollBuild() {
-			return '____';
-			// console.log(Object.keys(dictionary.build).find(key => dictionary.build[key].includes('satin')));
+			let build = '';
+			let buildProbabilities = [
+				// [gene1, gene2, probability of rolling gene2]
+				['common','common', 100],
+				['common','uncommon', 25],
+				['common','rare', 10],
+				['uncommon','uncommon', 100],
+				['uncommon','rare', 40],
+				['rare','rare', 100],
+			];
 
-			let parent1Rarity = Object.keys(dictionary.build).find(key => dictionary.build[key].includes(parent1.build));
-			let parent2Rarity = Object.keys(dictionary.build).find(key => dictionary.build[key].includes(parent2.build));
-
-			// common x common || uncommon x uncommon || rare x rare
-			if (parent1Rarity === 'common' && parent2Rarity === 'common' || 
-			parent1Rarity === 'uncommon' && parent2Rarity === 'uncommon' || 
-			parent1Rarity === 'rare' && parent2Rarity === 'rare') {
-				return randomizer([parent1, parent2]);
+			let parent1Build = {
+				rarity: '',
+				gene: '',
 			}
-			// uncommon x common
-			else if (parent1Rarity === 'uncommon' && parent2Rarity === 'common' || parent1Rarity === 'common' && parent2Rarity === 'uncommon') {
-				if (rng(100) <= 25) {
+			let parent2Build = {
+				rarity: '',
+				gene: '',
+			}
+			for (let key in dictionary.build) {
+				dictionary.build[key].forEach(build => {
+					if (parent1.build === build) {
+						parent1Build.gene = build;
+						parent1Build.rarity = key;
+					}
+					if (parent2.build === build) {
+						parent2Build.gene = build;
+						parent2Build.rarity = key;
+					}
+				});
+			}
 
+			buildProbabilities.forEach(([rarity1, rarity2, probability]) => {
+				if (parent1Build.rarity === parent2Build.rarity) {
+					build = randomizer([parent1Build.gene, parent2Build.gene]);
 				}
-			}
-			// rare x common
-			else if (parent1Rarity === 'rare' && parent2Rarity === 'common' || parent1Rarity === 'common' && parent2Rarity === 'rare') {
-				if (rng(100) <= 10) {
-
+				else if (parent1Build.rarity === rarity1 && parent2Build.rarity === rarity2) {
+					build = rng(100) <= probability ? parent2Build.gene : parent1Build.gene;
 				}
-			}
-			// rare x uncommon
-			else if (parent1Rarity === 'rare' && parent2Rarity === 'uncommon' || parent1Rarity === 'uncommon' && parent2Rarity === 'rare') {
-				if (rng(100) <= 20) {
-
+				else if (parent1Build.rarity === rarity2 && parent2Build.rarity === rarity1) {
+					build = rng(100) <= probability ? parent1Build.gene : parent2Build.gene;
 				}
-			}
+			});
+			
+			return build !== '' ? build.capitalizeStr() : 'Natural';
 		}
 
 		function rollGeno() {
@@ -240,12 +255,12 @@ function roll() {
 					});
 				}
 			});
-			
+
 			return [coat, ...markings.filter(onlyUnique).sortByArray(dictionary.markingsSorted)].join('/');
 		}
 
 		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, Status, ${rollRank()} Rank
-		B: ${rollBuild().capitalizeStr()} Build, ____ Ears, ____ Tail, ___ Bonus Trait
+		B: ${rollBuild()} Build, ____ Ears, ____ Tail, ___ Bonus Trait
 		M: (Mutation)
 		G: ${rollGeno()}
 		P: (Phenotype)
