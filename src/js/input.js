@@ -50,7 +50,7 @@ function addSelect(id, dict) {
 		function singleTier() { // dict = ['string', 'string,'...]
 			for (let i = 0; i < dict.length; i++) {
 				let option = document.createElement('option');
-				option.value = dict[i].replace(' ', '-');
+				option.value = dict[i];
 				option.text = dict[i].capitalizeStr();
 				select.appendChild(option);
 			}

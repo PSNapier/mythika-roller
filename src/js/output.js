@@ -186,7 +186,22 @@ function roll() {
 				}
 			});
 			
-			return build !== '' ? build.capitalizeStr() : 'Natural';
+			return build !== '' ? `${build.capitalizeStr()} Build` : 'Natural Build';
+		}
+
+		function rollPhysical() {
+			console.log(parent1, parent2);
+
+			let parentEarTrait = randomizer([parent1.earTrait, parent2.earTrait].filter(Boolean));
+			let ears = rng(100) <= 10 ? parentEarTrait : '';
+
+			let parentTailTrait = randomizer([parent1.tailTrait, parent2.tailTrait].filter(Boolean));
+			let tail = rng(100) <= 10 ? parentTailTrait : '';
+
+			let parentBonusTrait = randomizer([parent1.bonusTrait, parent2.bonusTrait].filter(Boolean));
+			let bonus = rng(100) <= 10 ? parentBonusTrait : '';
+
+			return [ears, tail, bonus].filter(Boolean).join(', ').capitalizeStr();
 		}
 
 		function rollGeno() {
@@ -260,7 +275,7 @@ function roll() {
 		}
 
 		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, Status, ${rollRank()} Rank
-		B: ${rollBuild()} Build, ____ Ears, ____ Tail, ___ Bonus Trait
+		B: ${[rollBuild(), rollPhysical()].filter(Boolean).join(', ')}
 		M: (Mutation)
 		G: ${rollGeno()}
 		P: (Phenotype)
