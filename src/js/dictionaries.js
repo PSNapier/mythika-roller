@@ -56,6 +56,15 @@ var dictionary = {
 		['ziemel', 'minkins'],
 		['ziemel', 'vilkren'],
 	],
+	statusInbred: [
+		'respiratory',
+		'deaf',
+		'blind',
+		'deaf and blind',
+		'anorexia',
+		'dehydrated',
+		'skin allergies',
+	],
 	rank: [
 		'runt',
 		'omega',

@@ -123,22 +123,36 @@ function roll() {
 			}
 		}
 
-		function rollRank() {
+		function rollStatusRank() {
+			let rank = '';
+			let status = '';
+
 			if (parent1.rank === 'runt' || parent2.rank === 'runt') {
-				return 'Runt';
+				status = rng(100) <= 60 ? 'deceased' : 'healthy';
+				rank = 'runt';
 			}
 			else if (parent1.rank === 'omega' || parent2.rank === 'omega') {
-				return 'Runt';
+				status = rng(100) <= 40 ? 'deceased' : 'healthy';
+				rank = 'runt';
 			}
 			else if (parent1.rank === 'beta' || parent2.rank === 'beta') {
-				return rng(100) <= 5 ? 'Omega' : 'Runt';
+				status = rng(100) <= 20 ? 'deceased' : 'healthy';
+				rank = rng(100) <= 5 ? 'omega' : 'runt';
 			}
 			else if (parent1.rank === 'alpha' || parent2.rank === 'alpha') {
-				return rng(100) <= 30 ? 'Omega' : 'Runt';
+				status = rng(100) <= 5 ? 'deceased' : 'healthy';
+				rank = rng(100) <= 30 ? 'omega' : 'runt';
 			}
 			else {
-				return 'Runt';
+				status = rng(100) <= 60 ? 'deceased' : 'healthy';
+				rank = 'runt';
 			}
+
+			if (status === 'deceased' && selections.behophenoix) {
+				status = rng(100) <= 10 ? 'healthy' : 'deceased';
+			}
+
+			return `${status.capitalizeStr()}, ${rank.capitalizeStr()} Rank`;
 		}
 
 		function rollBuild() {
@@ -190,8 +204,6 @@ function roll() {
 		}
 
 		function rollPhysical() {
-			console.log(parent1, parent2);
-
 			let parentEarTrait = randomizer([parent1.earTrait, parent2.earTrait].filter(Boolean));
 			let ears = rng(100) <= 10 ? parentEarTrait : '';
 
@@ -274,7 +286,7 @@ function roll() {
 			return [coat, ...markings.filter(onlyUnique).sortByArray(dictionary.markingsSorted)].join('/');
 		}
 
-		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, Status, ${rollRank()} Rank
+		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, ${rollStatusRank()}
 		B: ${[rollBuild(), rollPhysical()].filter(Boolean).join(', ')}
 		M: (Mutation)
 		G: ${rollGeno()}
