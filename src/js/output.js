@@ -7,8 +7,8 @@ function roll() {
 	let parent2 = {};
 	function getParentData(parentId) {
 		return {
-			geno: document.getElementById(`${parentId}geno`).value.split(' // ')[0].split('/'),
-			genoSecondary: document.getElementById(`${parentId}geno`).value.split(' // ').length > 1 ? document.getElementById(`${parentId}geno`).value.split(' // ')[1].split('/') : '',
+			geno: document.getElementById(`${parentId}geno`).value.split(' || ')[0].split('/'),
+			genoSecondary: document.getElementById(`${parentId}geno`).value.split(' || ').length > 1 ? document.getElementById(`${parentId}geno`).value.split(' || ')[1].split('/') : '',
 			species: document.getElementById(`${parentId}species`).value,
 			rank: document.getElementById(`${parentId}rank`).value,
 			build: document.getElementById(`${parentId}build`).value,
