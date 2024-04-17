@@ -7,7 +7,8 @@ function roll() {
 	let parent2 = {};
 	function getParentData(parentId) {
 		return {
-			geno: document.getElementById(`${parentId}geno`).value.split('/'),
+			geno: document.getElementById(`${parentId}geno`).value.split(' // ')[0].split('/'),
+			genoSecondary: document.getElementById(`${parentId}geno`).value.split(' // ').length > 1 ? document.getElementById(`${parentId}geno`).value.split(' // ')[1].split('/') : '',
 			species: document.getElementById(`${parentId}species`).value,
 			rank: document.getElementById(`${parentId}rank`).value,
 			build: document.getElementById(`${parentId}build`).value,
@@ -21,7 +22,7 @@ function roll() {
 	function getParents() {
 		parent1 = getParentData('parent1');
 		parent2 = getParentData('parent2');
-		// console.log(parent1, parent2);
+		console.log(parent1, parent2);
 	}
 	getParents();
 
@@ -216,7 +217,7 @@ function roll() {
 			return [ears, tail, bonus].filter(Boolean).join(', ').capitalizeStr();
 		}
 
-		function rollGeno() {
+		function rollGeno(parent1Geno, parent2Geno) {
 			// coat colour
 			let parent1Coat = {
 				rarity: '',
@@ -228,11 +229,11 @@ function roll() {
 			}
 			for (let key in dictionary.coatColours) {
 				dictionary.coatColours[key].forEach(coat => {
-					if (parent1.geno.includes(coat[1])) {
+					if (parent1Geno.includes(coat[1])) {
 						parent1Coat.gene = coat[1];
 						parent1Coat.rarity = key;
 					}
-					if (parent2.geno.includes(coat[1])) {
+					if (parent2Geno.includes(coat[1])) {
 						parent2Coat.gene = coat[1];
 						parent2Coat.rarity = key;
 					}
@@ -273,23 +274,45 @@ function roll() {
 
 				return rng(100) <= probabilities[key];
 			}
-			[parent1, parent2].forEach(parent => {
+			function rollMarkings(parentGeno) {
 				for (let key in dictionary.markings) {
 					dictionary.markings[key].forEach(marking => {
-						if (parent.geno.includes(marking[1]) && shouldPushMarking(key)) {
+						if (parentGeno.includes(marking[1]) && shouldPushMarking(key)) {
 							markings.push(marking[1]);
 						}
 					});
 				}
-			});
+			}
+			rollMarkings(parent1Geno);
+			rollMarkings(parent2Geno);
 
-			return [coat, ...markings.filter(onlyUnique).sortByArray(dictionary.markingsSorted)].join('/');
+			return [coat, ...markings.filter(onlyUnique).sortByArray(dictionary.markingsSorted)].filter(Boolean).join('/');
+		}
+
+		function rollGenoSecondary() {
+			let chimera = false;
+			let harlequin = false;
+			if (chimera || harlequin) {
+				// ...not the way chimera/harlquin is implemented in this system but neat code snippet wah wah
+				return [rollGeno(parent1.geno, parent2.geno), rollGeno(parent1.genoSecondary, parent2.genoSecondary)].filter(Boolean).join(' // ')
+			}
+			else {
+				let parent1Geno = parent1.geno;
+				let parent2Geno = parent1.geno;
+				if (parent1.genoSecondary !== '' && rng(100) <= 50) {
+					parent1Geno = parent1.genoSecondary;
+				}
+				if (parent2.genoSecondary !== '' && rng(100) <= 50) {
+					parent2Geno = parent2.genoSecondary;
+				}
+				return rollGeno(parent1Geno, parent2Geno);
+			}
 		}
 
 		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, ${rollStatusRank()}
 		B: ${[rollBuild(), rollPhysical()].filter(Boolean).join(', ')}
 		M: (Mutation)
-		G: ${rollGeno()}
+		G: ${rollGenoSecondary()}
 		P: (Phenotype)
 		Skills: +1 Attack, +1 Speed, +1 Defence
 		Runes: +1 Elemancy, +1 Medic, +1 Dark, +1 Void
