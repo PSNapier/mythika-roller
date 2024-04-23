@@ -64,9 +64,12 @@ function roll() {
 	}
 
 	function calcLitterAmount() {
-		let itemCheck = selections.soulApocalypse || selections.fertilityElk;
-		if (itemCheck && rng(100) <= 40) {
-			console.log('yas');
+		if (selections.soulApocalypse && rng(100) <= 40) {
+			selectionsUsed.push('soul apocalypse');
+			return 4;
+		}
+		else if (selections.fertilityElk && rng(100) <= 40) {
+			selectionsUsed.push('fertility elk');
 			return 4;
 		}
 
@@ -124,15 +127,19 @@ function roll() {
 
 		function rollGender() {
 			if (selections.unknownMixtureA) {
+				selectionsUsed.push('unknown mixture a');
 				return 'Male';
 			}
 			else if (selections.unknownMixtureB) {
+				selectionsUsed.push('unknown mixture b');
 				return 'Female';
 			}
 			else if (selections.arativasSpirit) {
+				selectionsUsed.push('arativas spirit');
 				return rng(100) <= 60 ? 'Female' : 'Male';
 			}
 			else if (selections.nerosLuck) {
+				selectionsUsed.push('neros luck');
 				return rng(100) <= 60 ? 'Male' : 'Female';
 			}
 			else {
@@ -166,6 +173,7 @@ function roll() {
 			}
 
 			if (status === 'deceased' && selections.behophenoix) {
+				selectionsUsed.push('behopheonix');
 				status = rng(100) <= 10 ? 'healthy' : 'deceased';
 			}
 
@@ -240,7 +248,7 @@ function roll() {
 				extraPass += 10;
 			}
 			if (selections.mutationKingsAssistant) {
-				selectionsUsed.push('mutationKingsAssistant');
+				selectionsUsed.push('mutation kings assistant');
 				extraPass += 10;
 			}
 
@@ -371,10 +379,16 @@ function roll() {
 		return output;
 	}
 
+	checkBloodline();
+	if (selectionsUsed.filter(Boolean).length > 0) {
+		const used = document.createElement('div');
+		used.innerHTML = `Breeding used ${selectionsUsed.join(', ').capitalizeStr()}`;
+		document.getElementById('output').appendChild(used);
+	}
+
 	for (let i = 1; i <= litterAmount; i++) {
-		checkBloodline();
-		const element = document.createElement('div');
-		element.innerHTML = `${newMythika(i)}`;
-		document.getElementById('output').appendChild(element);
+		const offspring = document.createElement('div');
+		offspring.innerHTML = `${newMythika(i)}`;
+		document.getElementById('output').appendChild(offspring);
 	}
 }
