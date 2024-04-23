@@ -40,6 +40,7 @@ function roll() {
 			behophenoix: document.getElementById(`behopheonix`).checked,
 			runeSpirit: document.getElementById(`runespirit`).checked,
 			fertilityElk: document.getElementById(`fertilityelk`).checked,
+			mutationKingsAssistant: document.getElementById(`mutationkingsassistant`).checked,
 			unknownMixtureA: document.getElementById(`unknownmixturea`).checked,
 			unknownMixtureB: document.getElementById(`unknownmixtureb`).checked,
 		}
@@ -217,6 +218,39 @@ function roll() {
 			return [ears, tail, bonus].filter(Boolean).join(', ').capitalizeStr();
 		}
 
+		function rollMutation() {
+			let extraPass = 0;
+			if (selections.solasdrake) {
+				extraPass += 10;
+			}
+			if (selections.mutationKingsAssistant) {
+				extraPass += 10;
+			}
+
+			console.log(parent1.mutation, parent2.mutation);
+			let healthy = true;
+			if (parent1.mutation === '' && parent2.mutation === '') {
+				if (healthy) {
+					return rng(100) <= 5 + extraPass ? randomizer(dictionary.mutations.random) : '';
+				}
+				else {
+					return rng(100) <= 5 + extraPass ? randomizer(dictionary.mutations.inbred) : '';
+				}
+			}
+			else if (parent1.mutation === parent2.mutation) {
+				return rng(100) <= 15 + extraPass ? parent1.mutation : '';
+			}
+			else if (parent1.mutation !== '' && parent2.mutation !== '') {
+				return rng(100) <= 8 + extraPass ? randomizer([parent1.mutation, parent2.mutation]) : '';
+			}
+			else if (parent1.mutation !== '') {
+				return rng(100) <= 8 + extraPass ? parent1.mutation : '';
+			}
+			else if (parent2.mutation !== '') {
+				return rng(100) <= 8 + extraPass ? parent2.mutation : '';
+			}
+		}
+
 		function rollGeno(parent1Geno, parent2Geno) {
 			// coat colour
 			let parent1Coat = {
@@ -311,7 +345,7 @@ function roll() {
 
 		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, ${rollStatusRank()}
 		B: ${[rollBuild(), rollPhysical()].filter(Boolean).join(', ')}
-		M: (Mutation)
+		M: ${rollMutation().capitalizeStr()}
 		G: ${rollGenoSecondary()}
 		P: (Phenotype)
 		Skills: +1 Attack, +1 Speed, +1 Defence

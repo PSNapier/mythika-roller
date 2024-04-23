@@ -108,6 +108,7 @@ const pets = [
 	'behopheonix',
 	'rune spirit',
 	'fertility elk',
+	'mutation king\'s assistant'
 ];
 
 function addItems(id, dict) {
