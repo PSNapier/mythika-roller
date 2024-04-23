@@ -1,17 +1,17 @@
 // INPUT
 
-function addGeno() {
+function addTextInput(type) {
 	['parent1', 'parent2'].forEach((parent) => {
 		let wrapper = document.createElement('div');
 		wrapper.classList.add('flex', 'pt-2', 'justify-center');
 
 		let label = document.createElement('div');
 		label.classList.add('pr-2');
-		label.innerText = `Geno`;
+		label.innerText = `${type.capitalizeStr()}`;
 		wrapper.appendChild(label);
 
 		let input = document.createElement('input');
-		input.id = `${parent}geno`;
+		input.id = `${parent}${type}`;
 		input.type = 'text';
 		input.classList.add('text-neutral-900');
 		wrapper.appendChild(input);
@@ -19,8 +19,8 @@ function addGeno() {
 		document.getElementById(parent).appendChild(wrapper);
 	})
 }
-
-addGeno();
+addTextInput('bloodline');
+addTextInput('geno');
 
 function addSelect(id, dict) {
 	['parent1','parent2'].forEach((parent) => {

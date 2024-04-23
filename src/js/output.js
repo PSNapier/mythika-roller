@@ -7,6 +7,7 @@ function roll() {
 	let parent2 = {};
 	function getParentData(parentId) {
 		return {
+			bloodline: document.getElementById(`${parentId}bloodline`).value.split(' || ')[0].split(' '),
 			geno: document.getElementById(`${parentId}geno`).value.split(' || ')[0].split('/'),
 			genoSecondary: document.getElementById(`${parentId}geno`).value.split(' || ').length > 1 ? document.getElementById(`${parentId}geno`).value.split(' || ')[1].split('/') : '',
 			species: document.getElementById(`${parentId}species`).value,
@@ -47,6 +48,20 @@ function roll() {
 	}
 	selections = getSelections();
 	// console.log(selections);
+
+	let inbred = false;
+	let selectionsUsed = [];
+
+	function checkBloodline() {
+		[parent1, parent2].forEach(parent => {
+			parent.bloodline = parent.bloodline.filter(Boolean).filter(ancestor => !ancestor.includes('A#'));
+		});
+		// console.log(parent1.bloodline, parent2.bloodline);
+
+		if (parent1.bloodline.some(ancestor => parent2.bloodline.includes(ancestor))) {
+			inbred = true;
+		}
+	}
 
 	function calcLitterAmount() {
 		let itemCheck = selections.soulApocalypse || selections.fertilityElk;
@@ -221,13 +236,14 @@ function roll() {
 		function rollMutation() {
 			let extraPass = 0;
 			if (selections.solasdrake) {
+				selectionsUsed.push('solasdrake');
 				extraPass += 10;
 			}
 			if (selections.mutationKingsAssistant) {
+				selectionsUsed.push('mutationKingsAssistant');
 				extraPass += 10;
 			}
 
-			console.log(parent1.mutation, parent2.mutation);
 			let healthy = true;
 			if (parent1.mutation === '' && parent2.mutation === '') {
 				if (healthy) {
@@ -356,6 +372,7 @@ function roll() {
 	}
 
 	for (let i = 1; i <= litterAmount; i++) {
+		checkBloodline();
 		const element = document.createElement('div');
 		element.innerHTML = `${newMythika(i)}`;
 		document.getElementById('output').appendChild(element);
