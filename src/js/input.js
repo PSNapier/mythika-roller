@@ -103,7 +103,7 @@ function addNumberInput(type) {
 		wrapper.appendChild(label);
 
 		let input = document.createElement('input');
-		input.id = `${parent}${type}`;
+		input.id = `${parent}${type.replace(/\s/g, '')}`;
 		input.type = 'number';
 		input.classList.add('text-neutral-900', 'w-[60px]', 'px-1');
 		wrapper.appendChild(input);
