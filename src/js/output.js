@@ -18,6 +18,13 @@ function roll() {
 			bonusTrait: document.getElementById(`${parentId}bonustrait`).value,
 			mutation: document.getElementById(`${parentId}mutation`).value,
 			hereditaryTraits: document.getElementById(`${parentId}hereditarytraits`).value,
+			attack: parseInt(document.getElementById(`${parentId}attack`).value || 0),
+			speed: parseInt(document.getElementById(`${parentId}speed`).value || 0),
+			defence: parseInt(document.getElementById(`${parentId}defence`).value || 0),
+			elemancy: parseInt(document.getElementById(`${parentId}elemancy`).value || 0),
+			medic: parseInt(document.getElementById(`${parentId}medic`).value || 0),
+			dark: parseInt(document.getElementById(`${parentId}dark`).value || 0),
+			void: parseInt(document.getElementById(`${parentId}void`).value || 0),
 		};
 	}
 	function getParents() {
@@ -371,13 +378,38 @@ function roll() {
 			}
 		}
 
+		function rollSkillsRunes() {
+			let skills = {
+				attack: 0,
+				speed: 0,
+				defence: 0,
+			};
+			let runes = {
+				elemancy: 0,
+				medic: 0,
+				dark: 0,
+				void: 0,
+			};
+
+			// confused about how this is supposed to be implemented
+			// ended up temporarily passing 10% of combined parent total with a max of 50
+			for (let key in skills) { 
+				skills[key] = Math.floor(Math.min(Math.max(parent1[key], parent2[key]) * .10, 50));
+			}
+			for (let key in runes) {
+				runes[key] = Math.floor(Math.min(Math.max(parent1[key], parent2[key]) * .10, 50));
+			}
+
+			return `Skills: +${skills.attack} Attack, +${skills.speed} Speed, +${skills.defence} Defence
+			Runes: +${runes.elemancy} Elemancy, +${runes.medic} Medic, +${runes.dark} Dark, +${runes.void} Void`;
+		}
+
 		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, ${rollStatusRank()}
 		B: ${[rollBuild(), rollPhysical()].filter(Boolean).join(', ')}
 		M: ${rollMutation().capitalizeStr()}
 		G: ${rollGenoSecondary()}
 		P: (Phenotype)
-		Skills: +1 Attack, +1 Speed, +1 Defence
-		Runes: +1 Elemancy, +1 Medic, +1 Dark, +1 Void
+		${rollSkillsRunes()}
 		Hereditary Traits:
 		(List hereditary traits here)`;
 		return output;

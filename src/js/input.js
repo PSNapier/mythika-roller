@@ -92,6 +92,28 @@ addSelect('bonus trait', dictionary.physicalTraits.bonus);
 addSelect('mutation', dictionary.mutations.random);
 addSelect('hereditary traits', dictionary.hereditaryTraits);
 
+function addNumberInput(type) {
+	['parent1', 'parent2'].forEach((parent) => {
+		let wrapper = document.createElement('div');
+		wrapper.classList.add('flex', 'pt-2', 'justify-center');
+
+		let label = document.createElement('div');
+		label.classList.add('pr-2');
+		label.innerText = `${type.capitalizeStr()}`;
+		wrapper.appendChild(label);
+
+		let input = document.createElement('input');
+		input.id = `${parent}${type}`;
+		input.type = 'number';
+		input.classList.add('text-neutral-900', 'w-[60px]', 'px-1');
+		wrapper.appendChild(input);
+
+		document.getElementById(parent).appendChild(wrapper);
+	})
+}
+dictionary.skills.forEach(skill => addNumberInput(skill));
+dictionary.runes.forEach(rune => addNumberInput(rune));
+
 const items = [
 	'nero\'s luck',
 	'arativa\'s spirit',

@@ -148,6 +148,17 @@ var dictionary = {
 		],
 	},
 	markingsSorted: [],
+	skills: [
+		'attack',
+		'speed',
+		'defence',
+	],
+	runes: [
+		'elemancy',
+		'medic',
+		'dark',
+		'void',
+	],
 	hereditaryTraits: {
 		common: [
 			'hunter',
