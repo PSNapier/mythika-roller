@@ -50,6 +50,7 @@ function roll() {
 	// console.log(selections);
 
 	let inbred = false;
+	let inbredIds = [];
 	let selectionsUsed = [];
 
 	function checkBloodline() {
@@ -58,9 +59,12 @@ function roll() {
 		});
 		// console.log(parent1.bloodline, parent2.bloodline);
 
-		if (parent1.bloodline.some(ancestor => parent2.bloodline.includes(ancestor))) {
-			inbred = true;
-		}
+		parent1.bloodline.forEach(ancestor => {
+			if (parent2.bloodline.includes(ancestor)) {
+				inbredIds.push(ancestor);
+				inbred = true;
+			}
+		});
 	}
 
 	function calcLitterAmount() {
@@ -379,12 +383,21 @@ function roll() {
 		return output;
 	}
 
-	checkBloodline();
 	if (selectionsUsed.filter(Boolean).length > 0) {
 		const used = document.createElement('div');
 		used.innerHTML = `Breeding used ${selectionsUsed.join(', ').capitalizeStr()}`;
 		document.getElementById('output').appendChild(used);
 	}
+
+	checkBloodline();
+	const inbredAlert = document.createElement('div');
+	if (inbred) {
+		inbredAlert.innerHTML = `This combination has resulted in inbreeding through ${inbredIds.join(', ')}, which can result in mutations and birth defects, or even death.`;
+	}
+	else {
+		inbredAlert.innerHTML = `This combination won't result in inbreeding.`;
+	}
+	document.getElementById('output').appendChild(inbredAlert);
 
 	for (let i = 1; i <= litterAmount; i++) {
 		const offspring = document.createElement('div');
