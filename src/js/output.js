@@ -57,7 +57,11 @@ function roll() {
 
 	let inbred = false;
 	let inbredIds = [];
+	let inbredMessage = '';
 	let selectionsUsed = [];
+	let deceased = false;
+	let chimera = false;
+	let harlequin = false;
 
 	function checkBloodline() {
 		[parent1, parent2].forEach(parent => {
@@ -170,28 +174,74 @@ function roll() {
 
 			if (parent1.rank === 'runt' || parent2.rank === 'runt') {
 				status = rng(100) <= 60 ? 'deceased' : 'healthy';
+				if (inbred) {
+					let x = rng(100);
+					status = x <= 60 ? 'deceased' : x <= 90 ? 'inbred' : 'inbred - healthy';
+				}
 				rank = 'runt';
 			}
 			else if (parent1.rank === 'omega' || parent2.rank === 'omega') {
 				status = rng(100) <= 40 ? 'deceased' : 'healthy';
+				if (inbred) {
+					let x = rng(100);
+					status = x <= 40 ? 'deceased' : x <= 80 ? 'inbred' : 'inbred - healthy';
+				}
 				rank = 'runt';
 			}
 			else if (parent1.rank === 'beta' || parent2.rank === 'beta') {
 				status = rng(100) <= 20 ? 'deceased' : 'healthy';
+				if (inbred) {
+					let x = rng(100);
+					status = x <= 20 ? 'deceased' : x <= 80 ? 'inbred' : 'inbred - healthy';
+				}
 				rank = rng(100) <= 5 ? 'omega' : 'runt';
 			}
 			else if (parent1.rank === 'alpha' || parent2.rank === 'alpha') {
 				status = rng(100) <= 5 ? 'deceased' : 'healthy';
+				if (inbred) {
+					let x = rng(100);
+					status = x <= 10 ? 'deceased' : x <= 60 ? 'inbred' : 'inbred - healthy';
+				}
 				rank = rng(100) <= 30 ? 'omega' : 'runt';
 			}
 			else {
 				status = rng(100) <= 60 ? 'deceased' : 'healthy';
+				if (inbred) {
+					let x = rng(100);
+					status = x <= 60 ? 'deceased' : x <= 90 ? 'inbred' : 'inbred - healthy';
+				}
 				rank = 'runt';
 			}
 
 			if (status === 'deceased' && selections.behophenoix) {
 				selectionsUsed.push('behopheonix');
 				status = rng(100) <= 10 ? 'healthy' : 'deceased';
+			}
+			if (inbred && selections.shadowsdrake) {
+				selectionsUsed.push('shadowsdrake');
+				status = 'inbred - healthy';
+			}
+
+			if (status === 'inbred') {
+				let mutation = randomizer(dictionary.statusInbred);
+				status = `inbred - ${mutation}`;
+
+				if (mutation === 'respiratory') {
+					inbredMessage = `You have 2 weeks to take your pup to Evrah's daycare and save them.`;
+				}
+				else if (mutation === 'anorexia') {
+					inbredMessage = `Take the pup to Evrah's daycare to help them recover.`;
+				}
+				else if (mutation === 'dehydrated') {
+					inbredMessage = `Give the pup a bottle of water.`;
+				}
+				else if (mutation === 'skin allergies') {
+					inbredMessage = `Use soothing cream to heal it.`;
+				}
+			}
+
+			if (status === 'deceased') {
+				deceased = true;
 			}
 
 			return `${status.capitalizeStr()}, ${rank.capitalizeStr()} Rank`;
@@ -259,6 +309,8 @@ function roll() {
 		}
 
 		function rollMutation() {
+			let output = '';
+
 			let extraPass = 0;
 			if (selections.solasdrake) {
 				selectionsUsed.push('solasdrake');
@@ -272,24 +324,33 @@ function roll() {
 			let healthy = true;
 			if (parent1.mutation === '' && parent2.mutation === '') {
 				if (healthy) {
-					return rng(100) <= 5 + extraPass ? randomizer(dictionary.mutations.random) : '';
+					output = rng(100) <= 5 + extraPass ? randomizer(dictionary.mutations.random) : '';
 				}
 				else {
-					return rng(100) <= 5 + extraPass ? randomizer(dictionary.mutations.inbred) : '';
+					output = rng(100) <= 5 + extraPass ? randomizer(dictionary.mutations.inbred) : '';
 				}
 			}
 			else if (parent1.mutation === parent2.mutation) {
-				return rng(100) <= 15 + extraPass ? parent1.mutation : '';
+				output = rng(100) <= 15 + extraPass ? parent1.mutation : '';
 			}
 			else if (parent1.mutation !== '' && parent2.mutation !== '') {
-				return rng(100) <= 8 + extraPass ? randomizer([parent1.mutation, parent2.mutation]) : '';
+				output = rng(100) <= 8 + extraPass ? randomizer([parent1.mutation, parent2.mutation]) : '';
 			}
 			else if (parent1.mutation !== '') {
-				return rng(100) <= 8 + extraPass ? parent1.mutation : '';
+				output = rng(100) <= 8 + extraPass ? parent1.mutation : '';
 			}
 			else if (parent2.mutation !== '') {
-				return rng(100) <= 8 + extraPass ? parent2.mutation : '';
+				output = rng(100) <= 8 + extraPass ? parent2.mutation : '';
 			}
+
+			if (output === 'chimera') {
+				chimera = true;
+			}
+			if (output === 'harlequin') {
+				harlequin = true;
+			}
+			
+			return output;
 		}
 
 		function rollGeno(parent1Geno, parent2Geno) {
@@ -367,6 +428,7 @@ function roll() {
 		function rollGenoSecondary() {
 			let chimera = false;
 			let harlequin = false;
+
 			if (chimera || harlequin) {
 				// ...not the way chimera/harlquin is implemented in this system but neat code snippet wah wah
 				return [rollGeno(parent1.geno, parent2.geno), rollGeno(parent1.genoSecondary, parent2.genoSecondary)].filter(Boolean).join(' // ')
@@ -477,6 +539,15 @@ function roll() {
 	for (let i = 1; i <= litterAmount; i++) {
 		const offspring = document.createElement('div');
 		offspring.innerHTML = `${newMythika(i)}`;
+		if (inbredMessage !== '') {
+			offspring.innerHTML += `\n${inbredMessage}`;
+		}
 		document.getElementById('output').appendChild(offspring);
 	}
+
+	const deceasedAlert = document.createElement('div');
+	if (deceased) {
+		deceasedAlert.innerHTML = `Unfortunately, one of your pups is born deceased. Head over to Nova’s Contracts to resurrect your pup.`;
+	}
+	document.getElementById('output').appendChild(deceasedAlert);
 }
