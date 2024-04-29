@@ -425,7 +425,44 @@ function roll() {
 			return [coat, ...markings.filter(onlyUnique).sortByArray(dictionary.markingsSorted)].filter(Boolean).join('/');
 		}
 
-		function rollGenoSecondary() {
+		function phenoReader(geno) {
+			let output = [];
+			geno.forEach(geno => {
+				let genoSplit = geno.split('/');
+
+				let coat = '';
+				for (let key in dictionary.coatColours) {
+					dictionary.coatColours[key].forEach(coatDict => {
+						if (genoSplit.includes(coatDict[1])) {
+							coat = coatDict[0];
+						}
+					});
+				}
+
+				let markings = [];
+				for (let key in dictionary.markings) {
+					dictionary.markings[key].forEach(markingsDict => {
+						if (genoSplit.includes(markingsDict[1])) {
+							markings.push(markingsDict[0]);
+						}
+					});
+				}
+
+				let temp = '';
+				if (markings.length > 0) {
+					temp = `${coat.capitalizeStr()} with ${markings.join(', ').capitalizeStr()}`;
+				}
+				else {
+					temp = `${coat.capitalizeStr()}`;
+				}
+
+				output.push(temp);
+			});
+			
+			return output;
+		}
+
+		function handleGenoPheno() {
 			let parent1Geno = parent1.geno;
 			let parent2Geno = parent1.geno;
 			if (parent1.genoSecondary !== '' && rng(100) <= 50) {
@@ -435,10 +472,17 @@ function roll() {
 				parent2Geno = parent2.genoSecondary;
 			}
 
+			let geno = [];
+			let pheno = [];
 			if (chimera || harlequin) {
-				return `${rollGeno(parent1Geno, parent2Geno)} || ${rollGeno(parent1Geno, parent2Geno)}`;
+				geno = [rollGeno(parent1Geno, parent2Geno), rollGeno(parent1Geno, parent2Geno)];
+				pheno = phenoReader(geno);
 			}
-			return rollGeno(parent1Geno, parent2Geno);
+			geno = [rollGeno(parent1Geno, parent2Geno)];
+			pheno = phenoReader(geno);
+
+			return `G: ${geno.join(' || ')}
+			P: ${pheno.join(' || ')}`;
 		}
 
 		function rollSkillsRunes() {
@@ -508,8 +552,7 @@ function roll() {
 		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, ${rollStatusRank()}
 		B: ${[rollBuild(), rollPhysical()].filter(Boolean).join(', ')}
 		M: ${rollMutation().capitalizeStr()}
-		G: ${rollGenoSecondary()}
-		P: (Phenotype)
+		${handleGenoPheno()}
 		${rollSkillsRunes()}
 		${rollHereditaryTraits()}`;
 		return output;
