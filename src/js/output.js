@@ -388,14 +388,33 @@ function roll() {
 				return obj;
 			}, {});
 
-			// confused about how this is supposed to be implemented
-			// ended up temporarily passing 10% of combined parent total with a max of 50
-			for (let key in skills) { 
-				skills[key] = Math.floor(Math.min(Math.max(parent1[key], parent2[key]) * .10, 50));
+			let extraPass = 0;
+			if (selections.runeSpirit) {
+				selectionsUsed.push('rune spirit');
+				extraPass += 10;
 			}
-			for (let key in runes) {
-				runes[key] = Math.floor(Math.min(Math.max(parent1[key], parent2[key]) * .10, 50));
+			if (selections.furion) {
+				skills.attack += 1;
 			}
+			if (selections.shellpin) {
+				skills.defense += 1;
+			}
+			if (selections.stamvaul) {
+				skills.speed += 1;
+			}
+
+			function rollSkillRunes(skillRune) {
+				for (let key in skillRune) { 
+					[parent1[key], parent2[key]].forEach(parentKey => {
+						let parentSkillRune = Math.max(Math.min(50, parentKey), 10);
+						for (let i = 0; i <= parentSkillRune; i++) {
+							skillRune[key] += rng(100) <= parentSkillRune + extraPass ? 1 : 0;
+						}
+					});
+				}
+			}
+			rollSkillRunes(skills);
+			rollSkillRunes(runes);
 
 			let skillsString = Object.entries(skills).map(([key, value]) => `+${value} ${key.capitalizeStr()}`).join(', ');
 			let runesString = Object.entries(runes).map(([key, value]) => `+${value} ${key.capitalizeStr()}`).join(', ');
