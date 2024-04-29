@@ -104,6 +104,13 @@ function roll() {
 		function rollSpecies() {
 			let species = '[none]';
 
+			[parent1, parent2].forEach(parent => {
+				let parentTrait = parent.hereditaryTraits.replace(' DNA I', '');
+				if (dictionary.species.includes(parentTrait)) {
+					parent.species = rng(100) <= 60 ? parentTrait : parent.species;
+				}
+			});
+
 			function checkParents(a, b) {
 				// console.log(a, b);
 				for (let k = 0; k < dictionary.speciesIllegalCrosses.length; k++) {
@@ -422,14 +429,32 @@ function roll() {
 			return `Skills: ${skillsString}\nRunes: ${runesString}`;
 		}
 
+		function rollHereditaryTraits() {
+			let traits = [];
+			let traitProbabilities = {
+				common: 40,
+				uncommon: 30,
+				rare: 20,
+				unique: 10,
+			};
+
+			[parent1.hereditaryTraits, parent2.hereditaryTraits].forEach(trait => {
+				let rarity = Object.keys(dictionary.hereditaryTraits).find(key => dictionary.hereditaryTraits[key].includes(trait));
+				if (rarity && rng(100) <= traitProbabilities[rarity]) {
+					traits.push(trait);
+				}
+			});
+
+			return `Hereditary Traits: ${traits.join(', ').capitalizeStr()}`;
+		}
+
 		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, ${rollStatusRank()}
 		B: ${[rollBuild(), rollPhysical()].filter(Boolean).join(', ')}
 		M: ${rollMutation().capitalizeStr()}
 		G: ${rollGenoSecondary()}
 		P: (Phenotype)
 		${rollSkillsRunes()}
-		Hereditary Traits:
-		(List hereditary traits here)`;
+		${rollHereditaryTraits()}`;
 		return output;
 	}
 

@@ -191,7 +191,7 @@ var dictionary = {
 			'mykron DNA I',
 			'zinner DNA I',
 			'zephies DNA I',
-			'minkin DNA I',
+			'minkins DNA I',
 			'funia DNA I',
 			'vilkren DNA I',
 		],

@@ -16,7 +16,7 @@ function addTextInput(type) {
 		input.classList.add('text-neutral-900');
 		wrapper.appendChild(input);
 
-		document.getElementById(parent).appendChild(wrapper);
+		document.getElementById(`${parent}genetics`).appendChild(wrapper);
 	})
 }
 addTextInput('bloodline');
@@ -46,6 +46,7 @@ function addSelect(id, dict) {
 		option.text = 'Select';
 		select.appendChild(option);
 
+
 		// option vs optgroup
 		function singleTier() { // dict = ['string', 'string,'...]
 			for (let i = 0; i < dict.length; i++) {
@@ -62,7 +63,7 @@ function addSelect(id, dict) {
 				optGroup.label = `${key.capitalizeStr()}`;
 				for (let i = 0; i < dict[key].length; i++) {
 					let option = document.createElement('option');
-					option.value = dict[key][i].replace(' ', '-');
+					option.value = dict[key][i];
 					option.text = dict[key][i].capitalizeStr();
 					optGroup.appendChild(option);
 				}
@@ -78,7 +79,7 @@ function addSelect(id, dict) {
 		}
 
 		// combine
-		document.getElementById(parent).appendChild(wrapper);
+		document.getElementById(`${parent}genetics`).appendChild(wrapper);
 	})
 }
 
@@ -91,6 +92,8 @@ addSelect('tail trait', dictionary.physicalTraits.tail);
 addSelect('bonus trait', dictionary.physicalTraits.bonus);
 addSelect('mutation', dictionary.mutations.random);
 addSelect('hereditary traits', dictionary.hereditaryTraits);
+
+
 
 function addNumberInput(type) {
 	['parent1', 'parent2'].forEach((parent) => {
@@ -108,7 +111,7 @@ function addNumberInput(type) {
 		input.classList.add('text-neutral-900', 'w-[60px]', 'px-1');
 		wrapper.appendChild(input);
 
-		document.getElementById(parent).appendChild(wrapper);
+		document.getElementById(`${parent}stats`).appendChild(wrapper);
 	})
 }
 dictionary.skills.forEach(skill => addNumberInput(skill));
