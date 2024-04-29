@@ -349,7 +349,7 @@ function roll() {
 			if (output === 'harlequin') {
 				harlequin = true;
 			}
-			
+
 			return output;
 		}
 
@@ -426,24 +426,19 @@ function roll() {
 		}
 
 		function rollGenoSecondary() {
-			let chimera = false;
-			let harlequin = false;
+			let parent1Geno = parent1.geno;
+			let parent2Geno = parent1.geno;
+			if (parent1.genoSecondary !== '' && rng(100) <= 50) {
+				parent1Geno = parent1.genoSecondary;
+			}
+			if (parent2.genoSecondary !== '' && rng(100) <= 50) {
+				parent2Geno = parent2.genoSecondary;
+			}
 
 			if (chimera || harlequin) {
-				// ...not the way chimera/harlquin is implemented in this system but neat code snippet wah wah
-				return [rollGeno(parent1.geno, parent2.geno), rollGeno(parent1.genoSecondary, parent2.genoSecondary)].filter(Boolean).join(' // ')
+				return `${rollGeno(parent1Geno, parent2Geno)} || ${rollGeno(parent1Geno, parent2Geno)}`;
 			}
-			else {
-				let parent1Geno = parent1.geno;
-				let parent2Geno = parent1.geno;
-				if (parent1.genoSecondary !== '' && rng(100) <= 50) {
-					parent1Geno = parent1.genoSecondary;
-				}
-				if (parent2.genoSecondary !== '' && rng(100) <= 50) {
-					parent2Geno = parent2.genoSecondary;
-				}
-				return rollGeno(parent1Geno, parent2Geno);
-			}
+			return rollGeno(parent1Geno, parent2Geno);
 		}
 
 		function rollSkillsRunes() {
