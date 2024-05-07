@@ -29,7 +29,7 @@ function roll() {
 	function getParents() {
 		parent1 = getParentData('parent1');
 		parent2 = getParentData('parent2');
-		console.log(parent1, parent2);
+		// console.log(parent1, parent2);
 	}
 	getParents();
 
@@ -350,6 +350,9 @@ function roll() {
 				harlequin = true;
 			}
 
+			if (output !== '') {
+				return `\nM: ${output.capitalizeStr()}`;
+			}
 			return output;
 		}
 
@@ -362,6 +365,12 @@ function roll() {
 			let parent2Coat = {
 				rarity: '',
 				gene: '',
+			}
+			if (parent1Geno[0] === '') {
+				parent1Geno[0] = 'Day';
+			}
+			if (parent2Geno[0] === '') {
+				parent2Geno[0] = 'Day';
 			}
 			for (let key in dictionary.coatColours) {
 				dictionary.coatColours[key].forEach(coat => {
@@ -478,8 +487,11 @@ function roll() {
 				geno = [rollGeno(parent1Geno, parent2Geno), rollGeno(parent1Geno, parent2Geno)];
 				pheno = phenoReader(geno);
 			}
-			geno = [rollGeno(parent1Geno, parent2Geno)];
-			pheno = phenoReader(geno);
+			else {
+				geno = [rollGeno(parent1Geno, parent2Geno)];
+				pheno = phenoReader(geno);
+			}
+			console.log(chimera, geno, pheno);
 
 			return `G: ${geno.join(' || ')}
 			P: ${pheno.join(' || ')}`;
@@ -546,15 +558,20 @@ function roll() {
 				}
 			});
 
-			return `Hereditary Traits: ${traits.join(', ').capitalizeStr()}`;
+			if (traits.length !== 0) {
+				return `\nHereditary Traits: ${traits.join(', ').capitalizeStr()}`;
+			}
+			return '';
 		}
 
-		let output = `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, ${rollStatusRank()}
-		B: ${[rollBuild(), rollPhysical()].filter(Boolean).join(', ')}
-		M: ${rollMutation().capitalizeStr()}
-		${handleGenoPheno()}
-		${rollSkillsRunes()}
-		${rollHereditaryTraits()}`;
+		let output = '';
+		output += `${mythikaCount}) ${rollSpecies()}, ${rollGender()}, ${rollStatusRank()}`;
+		output += `\nB: ${[rollBuild(), rollPhysical()].filter(Boolean).join(', ')}`;
+		output += `${rollMutation()}`;
+		output += `\n${handleGenoPheno()}`;
+		output += `\n${rollSkillsRunes()}`;
+		output += `${rollHereditaryTraits()}`;
+
 		return output;
 	}
 
@@ -585,7 +602,7 @@ function roll() {
 
 	const deceasedAlert = document.createElement('div');
 	if (deceased) {
-		deceasedAlert.innerHTML = `Unfortunately, one of your pups is born deceased. Head over to Nova’s Contracts to resurrect your pup.`;
+		deceasedAlert.innerHTML = `Unfortunately, one of your pups was born deceased. Head over to Nova’s Contracts to resurrect your pup.`;
 	}
 	document.getElementById('output').appendChild(deceasedAlert);
 }
