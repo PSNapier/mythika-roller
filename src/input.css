@@ -6,10 +6,19 @@ select {
 	height: 1.3em;
 	position: relative;
 	top: .15em;
+	margin-left: auto;
+}
+
+input[type="text"] {
+	margin-left: auto;
 }
 
 input[type="checkbox"] {
 	vertical-align: middle;
 	width: .9em;
 	margin-right: .4em;
+}
+
+.small-caps {
+	font-variant: small-caps;
 }

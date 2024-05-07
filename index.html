@@ -6,29 +6,31 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="src/output.css">
 
-	<body class="p-4 bg-neutral-900 text-neutral-200 text-md overflow-y-scroll">
-		<div id="log"></div>
-
-		<div id="input" class="grid grid-cols-1 lg:grid-cols-3 [&>div]:p-2 [&>div]:text-center">
-			<div id="parent1">
-				<div id="parent1genetics"></div>
-				<div id="parent1stats"></div>
-			</div>
-
-			<div id="parent2">
-				<div id="parent2genetics"></div>
-				<div id="parent2stats"></div>
-			</div>
-
-			<div id="selections"></div>
+	<body class="grid grid-cols-1 lg:grid-cols-4 p-4 bg-neutral-900 text-neutral-200 text-xs font-serif small-caps">
+		<div id="parent1" class="bg-neutral-800 p-2 border-2 border-neutral-200">
+			<h1 class="mb-2 text-sm">Parent 1</h1>
+			<div id="parent1genetics"></div>
+			<div id="parent1stats" class="flex flex-wrap justify-center"></div>
 		</div>
 
-		<div class="mt-6 mb-4 text-center">
-			<button onClick="roll()" class="px-2 bg-neutral-200 text-neutral-900 hover:scale-110">Roll</button>
-			<button onClick="reload()" class="px-2 bg-neutral-200 text-neutral-900 hover:scale-110">Clear</button>
+		<div id="parent2" class="bg-neutral-800 p-2 border-2 border-neutral-200">
+			<h1 class="mb-2 text-sm">Parent 2</h1>
+			<div id="parent2genetics"></div>
+			<div id="parent2stats" class="flex flex-wrap justify-center"></div>
 		</div>
 
-		<div id="output" class="[&>div]:pt-4 whitespace-pre-line text-center"></div>
+		<div id="selections" class="bg-neutral-800 p-2 border-2 border-neutral-200">
+			<h1 class="mb-2 text-sm">Selections</h1>
+		</div>
+
+		<div class="p-2">
+			<div id="output" class="[&>div]:pt-4 whitespace-pre-line text-center"></div>
+
+			<div class="mt-6 mb-4 text-center">
+				<button onClick="roll()" class="px-2 bg-neutral-200 text-neutral-900 hover:scale-110">Roll</button>
+				<button onClick="reload()" class="px-2 bg-neutral-200 text-neutral-900 hover:scale-110">Clear</button>
+			</div>
+		</div>
 	</body>
 
 <script src="src/js/toolbox.js"></script>

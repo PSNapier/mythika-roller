@@ -3,7 +3,7 @@
 function addTextInput(type) {
 	['parent1', 'parent2'].forEach((parent) => {
 		let wrapper = document.createElement('div');
-		wrapper.classList.add('flex', 'pt-2', 'justify-center');
+		wrapper.classList.add('flex', 'pt-2', 'justify-start');
 
 		let label = document.createElement('div');
 		label.classList.add('pr-2');
@@ -26,7 +26,7 @@ function addSelect(id, dict) {
 	['parent1','parent2'].forEach((parent) => {
 		// wrapper div
 		let wrapper = document.createElement('div');
-		wrapper.classList.add('flex', 'pt-2', 'justify-center');
+		wrapper.classList.add('flex', 'pt-2', 'sm:justify-start');
 
 		// label div
 		let label = document.createElement('div');
@@ -93,15 +93,13 @@ addSelect('bonus trait', dictionary.physicalTraits.bonus);
 addSelect('mutation', dictionary.mutations.random);
 addSelect('hereditary traits', dictionary.hereditaryTraits);
 
-
-
 function addNumberInput(type) {
 	['parent1', 'parent2'].forEach((parent) => {
 		let wrapper = document.createElement('div');
-		wrapper.classList.add('flex', 'pt-2', 'justify-center');
+		wrapper.classList.add('grid', 'grid-rows-2', 'm-1', 'justify-center');
 
 		let label = document.createElement('div');
-		label.classList.add('pr-2');
+		label.classList.add('text-center');
 		label.innerText = `${type.capitalizeStr()}`;
 		wrapper.appendChild(label);
 
@@ -139,7 +137,7 @@ const pets = [
 function addItems(id, dict) {
 	for (let i = 0; i < dict.length; i++) {
 		let wrapper = document.createElement('div');
-		wrapper.classList.add('flex', 'pt-2', 'justify-center');
+		wrapper.classList.add('flex', 'pt-2', 'justify-start');
 
 		let checkbox = document.createElement('input');
 		checkbox.type = 'checkbox';
