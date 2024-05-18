@@ -37,7 +37,7 @@ function addSelect(id, dict) {
 		// select
 		let select = document.createElement('select');
 		select.id = `${parent}${id.replace(' ', '')}`;
-		select.classList.add('text-neutral-900');
+		select.classList.add('text-neutral-900', 'small-caps');
 		wrapper.appendChild(select);
 
 		// default value
@@ -92,6 +92,10 @@ addSelect('tail trait', dictionary.physicalTraits.tail);
 addSelect('bonus trait', dictionary.physicalTraits.bonus);
 addSelect('mutation', dictionary.mutations.random);
 addSelect('hereditary traits', dictionary.hereditaryTraits);
+
+['parent1hereditarytraits', 'parent2hereditarytraits'].forEach((parent) => {
+	document.getElementById(parent).multiple = true;
+});
 
 function addNumberInput(type) {
 	['parent1', 'parent2'].forEach((parent) => {
@@ -153,5 +157,5 @@ function addItems(id, dict) {
 	}
 }
 
-addItems('selections', items);
-addItems('selections', pets);
+addItems('items', items);
+addItems('pets', pets);

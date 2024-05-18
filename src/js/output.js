@@ -559,7 +559,7 @@ function roll() {
 			});
 
 			if (traits.length !== 0) {
-				return `\nHereditary Traits: ${traits.join(', ').capitalizeStr()}`;
+				return `\nHereditary Traits:\n${traits.map(string => `- ${string}`).join('\n').capitalizeStr()}`;
 			}
 			return '';
 		}
