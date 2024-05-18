@@ -143,6 +143,11 @@ function roll() {
 				}
 			}
 
+			if (selections.toleranceCrystal && parent1.species !== '' && parent2.species !== '') {
+				selectionsUsed.push('tolerance crystal');
+				species = randomizer([parent1.species, parent2.species]);
+			}
+
 			return species.capitalizeStr();
 		}
 
@@ -491,7 +496,7 @@ function roll() {
 				geno = [rollGeno(parent1Geno, parent2Geno)];
 				pheno = phenoReader(geno);
 			}
-			console.log(chimera, geno, pheno);
+			// console.log(chimera, geno, pheno);
 
 			return `G: ${geno.join(' || ')}
 			P: ${pheno.join(' || ')}`;
