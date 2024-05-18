@@ -44,7 +44,7 @@ function roll() {
 			shellpin: document.getElementById(`shellpin`).checked,
 			stamvaul: document.getElementById(`stamvaul`).checked,
 			toleranceCrystal: document.getElementById(`tolerancecrystal`).checked,
-			behophenoix: document.getElementById(`behopheonix`).checked,
+			behophoenix: document.getElementById(`behophoenix`).checked,
 			runeSpirit: document.getElementById(`runespirit`).checked,
 			fertilityElk: document.getElementById(`fertilityelk`).checked,
 			mutationKingsAssistant: document.getElementById(`mutationkingsassistant`).checked,
@@ -218,8 +218,9 @@ function roll() {
 				rank = 'runt';
 			}
 
-			if (status === 'deceased' && selections.behophenoix) {
-				selectionsUsed.push('behopheonix');
+			status = 'deceased';
+			if (status === 'deceased' && selections.behophoenix) {
+				selectionsUsed.push('behophoenix');
 				status = rng(100) <= 10 ? 'healthy' : 'deceased';
 			}
 			if (inbred && selections.shadowsdrake) {
@@ -580,12 +581,6 @@ function roll() {
 		return output;
 	}
 
-	if (selectionsUsed.filter(Boolean).length > 0) {
-		const used = document.createElement('div');
-		used.innerHTML = `Breeding used ${selectionsUsed.join(', ').capitalizeStr()}`;
-		document.getElementById('output').appendChild(used);
-	}
-
 	checkBloodline();
 	const inbredAlert = document.createElement('div');
 	if (inbred) {
@@ -603,6 +598,12 @@ function roll() {
 			offspring.innerHTML += `\n${inbredMessage}`;
 		}
 		document.getElementById('output').appendChild(offspring);
+	}
+
+	if (selectionsUsed.filter(Boolean).length > 0) {
+		const used = document.createElement('div');
+		used.innerHTML = `Breeding used ${selectionsUsed.join(', ').capitalizeStr()}`;
+		document.getElementById('output').prepend(used);
 	}
 
 	const deceasedAlert = document.createElement('div');

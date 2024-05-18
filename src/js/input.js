@@ -132,7 +132,7 @@ const items = [
 	'unknown mixture b',
 ];
 const pets = [
-	'behopheonix',
+	'behophoenix',
 	'rune spirit',
 	'fertility elk',
 	'mutation king\'s assistant'
