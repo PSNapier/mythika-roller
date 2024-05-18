@@ -6,35 +6,36 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="src/output.css">
 
-	<body class="grid grid-cols-1 lg:grid-cols-4 p-4 bg-neutral-900 text-neutral-200 text-xs font-serif small-caps">
-		<div id="parent1" class="bg-neutral-800 p-2 border-2 border-neutral-200">
-			<h1 class="mb-2 text-sm">Parent 1</h1>
-			<div id="parent1genetics"></div>
-			<div id="parent1stats" class="flex flex-wrap justify-center mt-2"></div>
-		</div>
+	<body class="bg-neutral-900 text-neutral-200 text-xs font-serif small-caps">
+		<div id="wrapper" class="h-screen min-w-[255px] flex flex-col lg:flex-row p-4 lg:[&>div]:w-1/4">
+			<div id="parent1" class="bg-neutral-800 bg-opacity-80 p-2 border-2 border-neutral-200">
+				<h1 class="mb-2 text-sm">Parent 1:</h1>
+				<div id="parent1genetics"></div>
+				<div id="parent1stats" class="flex flex-wrap justify-center mt-2"></div>
+			</div>
 
-		<div id="parent2" class="bg-neutral-800 p-2 border-2 border-neutral-200">
-			<h1 class="mb-2 text-sm">Parent 2</h1>
-			<div id="parent2genetics"></div>
-			<div id="parent2stats" class="flex flex-wrap justify-center mt-2"></div>
-		</div>
+			<div id="parent2" class="bg-neutral-800 bg-opacity-80 p-2 border-2 border-neutral-200">
+				<h1 class="mb-2 text-sm">Parent 2:</h1>
+				<div id="parent2genetics"></div>
+				<div id="parent2stats" class="flex flex-wrap justify-center mt-2"></div>
+			</div>
 
-		<div id="selections" class="bg-neutral-800 p-2 border-2 border-neutral-200">
-			<h1 class="mb-2 text-sm">Selections</h1>
-			<div id="items">
+			<div id="selections" class="bg-neutral-800 bg-opacity-80 p-2 border-2 border-neutral-200">
+				<h1 class="mb-2 text-sm">Selections:</h1>
 				<div class="mt-2">Items</div>
-			</div>
-			<div id="pets">
+				<div id="items" class="ml-2"></div>
 				<div class="mt-4">Pets</div>
+				<div id="pets" class="ml-2"></div>
 			</div>
-		</div>
 
-		<div class="p-2">
-			<div id="output" class="[&>div]:pt-4 whitespace-pre-line text-center"></div>
+			<div class="p-2 bg-neutral-800 bg-opacity-80 min-h-[450px]">
+				<div id="output" class="h-[90%] bg-neutral-900 px-2 [&>div]:pt-4 whitespace-pre-line text-center overflow-auto"></div>
 
-			<div class="mt-6 mb-4 text-center">
-				<button onClick="roll()" class="px-2 bg-neutral-200 text-neutral-900 hover:scale-110">Roll</button>
-				<button onClick="reload()" class="px-2 bg-neutral-200 text-neutral-900 hover:scale-110">Clear</button>
+				<div class="mt-4 text-xl text-center">
+					<button onClick="roll()" class="px-2 small-caps transition-transform hover:scale-125">Roll</button>
+					|
+					<button onClick="reload()" class="px-2 small-caps transition-transform hover:scale-125">Clear</button>
+				</div>
 			</div>
 		</div>
 	</body>
