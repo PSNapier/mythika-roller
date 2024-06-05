@@ -12,7 +12,7 @@ function roll() {
 		}, {});
 
 		return {
-			bloodline: document.getElementById(`${parentId}bloodline`).value.split(' || ')[0].split(' '),
+			bloodline: document.getElementById(`${parentId}bloodline`).value.replace(',', '').split(' || ')[0].split(' '),
 			geno: document.getElementById(`${parentId}geno`).value.split(' || ')[0].split('/'),
 			genoSecondary: document.getElementById(`${parentId}geno`).value.split(' || ').length > 1 ? document.getElementById(`${parentId}geno`).value.split(' || ')[1].split('/') : '',
 			species: document.getElementById(`${parentId}species`).value,
@@ -67,7 +67,7 @@ function roll() {
 		[parent1, parent2].forEach(parent => {
 			parent.bloodline = parent.bloodline.filter(Boolean).filter(ancestor => !ancestor.includes('A#'));
 		});
-		// console.log(parent1.bloodline, parent2.bloodline);
+		console.log(parent1.bloodline, parent2.bloodline);
 
 		parent1.bloodline.forEach(ancestor => {
 			if (parent2.bloodline.includes(ancestor)) {
