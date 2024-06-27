@@ -12,7 +12,7 @@ function roll() {
 		}, {});
 
 		return {
-			bloodline: document.getElementById(`${parentId}bloodline`).value.replace(',', '').split(' || ')[0].split(' '),
+			bloodline: document.getElementById(`${parentId}bloodline`).value.replace(/\,/g, '').split(' || ')[0].split(' '),
 			geno: document.getElementById(`${parentId}geno`).value.split(' || ')[0].split('/'),
 			genoSecondary: document.getElementById(`${parentId}geno`).value.split(' || ').length > 1 ? document.getElementById(`${parentId}geno`).value.split(' || ')[1].split('/') : '',
 			species: document.getElementById(`${parentId}species`).value,
@@ -67,7 +67,6 @@ function roll() {
 		[parent1, parent2].forEach(parent => {
 			parent.bloodline = parent.bloodline.filter(Boolean).filter(ancestor => !ancestor.includes('A#'));
 		});
-		console.log(parent1.bloodline, parent2.bloodline);
 
 		parent1.bloodline.forEach(ancestor => {
 			if (parent2.bloodline.includes(ancestor)) {
@@ -75,6 +74,7 @@ function roll() {
 				inbred = true;
 			}
 		});
+		// console.log(parent1.bloodline, parent2.bloodline, inbred, inbredIds);
 	}
 
 	function calcLitterAmount() {
@@ -218,7 +218,6 @@ function roll() {
 				rank = 'runt';
 			}
 
-			status = 'deceased';
 			if (status === 'deceased' && selections.behophoenix) {
 				selectionsUsed.push('behophoenix');
 				status = rng(100) <= 10 ? 'healthy' : 'deceased';
@@ -229,7 +228,8 @@ function roll() {
 			}
 
 			if (status === 'inbred') {
-				let mutation = randomizer(dictionary.statusInbred);
+				console.log('yas');
+				let mutation = randomizer(dictionary.mutations.inbred);
 				status = `inbred - ${mutation}`;
 
 				if (mutation === 'respiratory') {
@@ -354,6 +354,9 @@ function roll() {
 			}
 			if (output === 'harlequin') {
 				harlequin = true;
+			}
+			if (output !== 'chimera' && output !== 'harlequin') {
+				selectionsUsed.splice(selectionsUsed.indexOf('mutation kings assistant'), 1);
 			}
 
 			if (output !== '') {
@@ -602,7 +605,7 @@ function roll() {
 
 	if (selectionsUsed.filter(Boolean).length > 0) {
 		const used = document.createElement('div');
-		used.innerHTML = `Breeding used ${selectionsUsed.join(', ').capitalizeStr()}`;
+		used.innerHTML = `Breeding used ${selectionsUsed.filter(onlyUnique).join(', ').capitalizeStr()}`;
 		document.getElementById('output').prepend(used);
 	}
 
