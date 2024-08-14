@@ -7,7 +7,13 @@
 <link rel="stylesheet" href="src/output.css">
 
 	<body class="bg-neutral-900 text-neutral-200 text-xs font-serif small-caps">
-		<div id="wrapper" class="h-screen min-w-[255px] flex flex-col lg:flex-row p-4 lg:[&>div]:w-1/4">
+		<div id="tabs" class="p-2 lg:pl-4 lg:absolute flex flex-row col-span-4 text-neutral-800 hover:[&>div]:text-neutral-500 [&>div]:transition [&>div]:mr-2 cursor-pointer underline">
+			<div id="tab1" class="tab tab-active" onClick="switchTab(1)">Breeding Roller</div>
+			<div id="tab2" class="tab" onClick="switchTab(2)">Bloodline Checker</div>
+			<div id="tab3" class="tab" onClick="switchTab(3)">Geno Randomizer</div>
+		</div>
+		
+		<div id="flex-wrapper" class="h-screen min-w-[255px] flex flex-col lg:flex-row lg:p-4 lg:pt-8 lg:[&>div]:w-1/4">
 			<div id="parent1" class="bg-neutral-800 bg-opacity-80 p-2 border-2 border-neutral-200">
 				<h1 class="mb-2 text-sm">Parent 1:</h1>
 				<div id="parent1genetics"></div>
