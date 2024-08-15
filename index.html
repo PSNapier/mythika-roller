@@ -6,49 +6,99 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="src/output.css">
 
-	<body class="bg-neutral-900 text-neutral-200 text-xs font-serif small-caps">
-		<nav id="tabs" class="fixed flex flex-row w-full justify-center font-sans text-lg bg-neutral-800 [&>div]:mx-2 [&>div]:cursor-pointer hover:[&>div]:text-red-800 [&>div]:transition">
-			<div>Breeding Roller</div>
-			<div>Bloodline Checker</div>
-			<div>Geno Randomizer</div>
-		</nav>
-		
-		<div id="flex-wrapper" class="h-screen min-w-[255px] flex flex-col lg:flex-row lg:p-4 lg:pt-10 lg:[&>div]:w-1/4">
-			<div id="parent1" class="bg-neutral-800 bg-opacity-80 p-2 border-2 border-neutral-200">
-				<h1 class="mb-2 text-sm">Parent 1:</h1>
-				<div id="parent1genetics"></div>
-				<div id="parent1stats" class="flex flex-wrap justify-center mt-2"></div>
-			</div>
+<body>
+<nav id="tab-nav" class="fixed flex flex-row w-full justify-center font-sans text-lg bg-neutral-800 [&>div]:mx-2 hover:[&>div]:text-red-800 [&>div]:transition text-neutral-200 small-caps">
+		<div><button onclick="openTab(event, 'breeding-roller')">Breeding Roller</button></div>
+		<div><button onclick="openTab(event, 'bloodline-checker')">Bloodline Checker</button></div>
+		<div><button onclick="openTab(event, 'randomizer')">Randomizer</button></div>
+	</nav>
 
-			<div id="parent2" class="bg-neutral-800 bg-opacity-80 p-2 border-2 border-neutral-200">
-				<h1 class="mb-2 text-sm">Parent 2:</h1>
-				<div id="parent2genetics"></div>
-				<div id="parent2stats" class="flex flex-wrap justify-center mt-2"></div>
-			</div>
+<section id="breeding-roller" class="tab-content bg-neutral-700 text-neutral-200 text-xs font-serif small-caps hidden">
+	<div id="flex-wrapper" class="h-screen min-w-[255px] flex flex-col lg:flex-row lg:p-4 lg:pt-10 lg:[&>div]:w-1/4">
+		<div id="parent1" class="bg-neutral-800 bg-opacity-80 p-2 border-2 border-neutral-200">
+			<h1 class="mb-2 text-sm">Parent 1:</h1>
+			<div id="parent1genetics"></div>
+			<div id="parent1stats" class="flex flex-wrap justify-center mt-2"></div>
+		</div>
 
-			<div id="selections" class="bg-neutral-800 bg-opacity-80 p-2 border-2 border-neutral-200">
-				<h1 class="mb-2 text-sm">Selections:</h1>
-				<div class="mt-2">Items</div>
-				<div id="items" class="ml-2"></div>
-				<div class="mt-4">Pets</div>
-				<div id="pets" class="ml-2"></div>
-			</div>
+		<div id="parent2" class="bg-neutral-800 bg-opacity-80 p-2 border-2 border-neutral-200">
+			<h1 class="mb-2 text-sm">Parent 2:</h1>
+			<div id="parent2genetics"></div>
+			<div id="parent2stats" class="flex flex-wrap justify-center mt-2"></div>
+		</div>
 
-			<div class="p-2 bg-neutral-800 bg-opacity-80 min-h-[450px]">
-				<div id="output" class="h-[90%] bg-neutral-900 px-2 [&>div]:pt-4 whitespace-pre-line text-center overflow-auto"></div>
+		<div id="selections" class="bg-neutral-800 bg-opacity-80 p-2 border-2 border-neutral-200">
+			<h1 class="mb-2 text-sm">Selections:</h1>
+			<div class="mt-2">Items</div>
+			<div id="items" class="ml-2"></div>
+			<div class="mt-4">Pets</div>
+			<div id="pets" class="ml-2"></div>
+		</div>
 
-				<div class="mt-4 text-xl text-center">
-					<button onClick="roll()" class="px-2 small-caps transition-transform hover:scale-125">Roll</button>
-					|
-					<button onClick="reload()" class="px-2 small-caps transition-transform hover:scale-125">Clear</button>
-				</div>
+		<div class="p-2 bg-neutral-800 bg-opacity-80 min-h-[450px]">
+			<div id="output" class="h-[90%] bg-neutral-900 px-2 [&>div]:pt-4 whitespace-pre-line text-center overflow-auto"></div>
+
+			<div class="mt-4 text-xl text-center">
+				<button onClick="roll()" class="px-2 small-caps transition-transform hover:scale-125">Roll</button>
+				|
+				<button onClick="reload()" class="px-2 small-caps transition-transform hover:scale-125">Clear</button>
 			</div>
 		</div>
-	</body>
+	</div>
 
-<script src="src/js/toolbox.js"></script>
-<script src="src/js/dictionaries.js"></script>
-<script src="src/js/input.js"></script>
-<script src="src/js/output.js"></script>
+	<script src="src/js/breeding-roller/toolbox.js"></script>
+	<script src="src/js/breeding-roller/dictionaries.js"></script>
+	<script src="src/js/breeding-roller/input.js"></script>
+	<script src="src/js/breeding-roller/output.js"></script>
+</section>
+
+<section id="bloodline-checker" class="tab-content hidden">
+</section>
+
+<section id="randomizer" class="tab-content bg-neutral-700">
+	<div id="wrapper" class="content">
+		<div id="input" style="text-align: center;">
+			<div id="wrapperOptions">
+				<div id="pillContainer">
+					<span class="container-header">Items</span>
+				</div>
+
+				<div id="options-spacer"></div>
+
+				<div id="selectContainer">
+					<span class="container-header">Build</span>
+
+					<!-- <span class="break"></span> -->
+
+					<select id="selectSpecies"><option value="">Species</option></select>
+					<select id="selectGender"><option value="">Gender</option></select>
+					<select id="selectRank"><option value="">Rank</option></select>
+					<select id="selectBuild"><option value="">Build</option></select>
+					<select id="selectEars"><option value="">Ear Trait</option></select>
+					<select id="selectTail"><option value="">Tail Trait</option></select>
+					<select id="selectBonusTrait"><option value="">Bonus Trait</option></select>
+					<select id="selectMutation"><option value="">Mutation</option></select>
+					<select id="selectCoatColour"><option value="">Coat Colour</option></select>
+					<select id="selectMarkings" multiple="multiple" size="5"><option value="">Markings</option></select>		
+					<select id="selectHereditaryTraits" multiple="multiple" size="5"><option value="">Hereditary Traits</option></select>
+					</div>
+			</div>
+		</div>
+
+		<div id="output-wrapper">
+			<div id="output-button-wrapper">
+				<button id="buttonRoll" onclick="buttonPress()">Roll Pup</button>
+				<button id="buttonClear" onclick="reload()">Clear Form</button>
+			</div>
+			<div id="output"></div>
+		</div>
+	</div>
+
+	<script src="script.js"></script>
+</section>
+
+<script src="src/js/openTab.js"></script>
+
+</body>
 
 </html>
