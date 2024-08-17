@@ -554,10 +554,6 @@ video {
   --tw-contain-style:  ;
 }
 
-.fixed {
-  position: fixed;
-}
-
 .m-1 {
   margin: 0.25rem;
 }
@@ -606,20 +602,12 @@ video {
   width: 60px;
 }
 
-.w-full {
-  width: 100%;
-}
-
 .min-w-\[255px\] {
   min-width: 255px;
 }
 
 .grid-rows-2 {
   grid-template-rows: repeat(2, minmax(0, 1fr));
-}
-
-.flex-row {
-  flex-direction: row;
 }
 
 .flex-col {
@@ -704,17 +692,8 @@ video {
   text-align: center;
 }
 
-.font-sans {
-  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-}
-
 .font-serif {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-}
-
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
 }
 
 .text-sm {
@@ -757,9 +736,9 @@ video {
 }
 
 body {
-  /* background-image: url('assets/foggymountains-bg.png');
-	background-size: cover;
-	background-repeat: no-repeat; */
+  background-image: url('assets/foggymountains-bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 select {
@@ -813,26 +792,8 @@ input[type="checkbox"] {
   }
 }
 
-.\[\&\>div\]\:mx-2>div {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-}
-
 .\[\&\>div\]\:pt-4>div {
   padding-top: 1rem;
-}
-
-.\[\&\>div\]\:transition>div {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.hover\:\[\&\>div\]\:text-red-800>div:hover {
-  --tw-text-opacity: 1;
-  color: rgb(153 27 27 / var(--tw-text-opacity));
 }
 
 @media (min-width: 1024px) {

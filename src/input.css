@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 body {
-	/* background-image: url('assets/foggymountains-bg.png');
+	background-image: url('assets/foggymountains-bg.png');
 	background-size: cover;
-	background-repeat: no-repeat; */
+	background-repeat: no-repeat;
 }
 
 select {
