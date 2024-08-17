@@ -535,12 +535,10 @@ function roll() {
 			function rollSkillRunes(skillRune) {
 				for (let key in skillRune) { 
 					[parent1[key], parent2[key]].forEach(parentKey => {
-						let x = rng(100);
-						for (let i = 50; i >= 10; i -= 10) {
-							if (parentKey <= i && x <= i + extraPass) {
-								skillRune[key] += 1;
-								break;
-							}
+						let passChance = Math.max(10, Math.floor(parentKey / 10) * 10) + extraPass;
+						let passAmount = Math.max(1, Math.floor(passChance / 10));
+						if (rng(100) <= passChance) {
+							skillRune[key] += passAmount;
 						}
 					});
 				}

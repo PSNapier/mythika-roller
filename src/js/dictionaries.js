@@ -234,6 +234,7 @@ var dictionary = {
 			'scales / armor plates',
 			'antennas',
 			'dragon vines',
+			'polydactyly',
 		],
 	},
 }
