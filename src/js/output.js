@@ -603,13 +603,23 @@ function roll() {
       rollSkillRunes(runes);
 
       let skillsString = Object.entries(skills)
+        .filter(([key, value]) => value !== 0)
         .map(([key, value]) => `+${value} ${key.capitalizeStr()}`)
         .join(", ");
       let runesString = Object.entries(runes)
+        .filter(([key, value]) => value !== 0)
         .map(([key, value]) => `+${value} ${key.capitalizeStr()}`)
         .join(", ");
 
-      return `Skills: ${skillsString}\nRunes: ${runesString}`;
+      let output = [];
+      if (skillsString) {
+        output.push(`Skills: ${skillsString}`);
+      }
+      if (runesString) {
+        output.push(`Runes: ${runesString}`);
+      }
+
+      return output.join("\n");
     }
 
     function rollHereditaryTraits() {
