@@ -258,7 +258,7 @@ function roll() {
       }
 
       if (status === "inbred") {
-        console.log("yas");
+        console.log("inbred");
         let mutation = randomizer(dictionary.mutations.inbred);
         status = `inbred - ${mutation}`;
 
@@ -412,10 +412,6 @@ function roll() {
     }
 
     function rollGeno(parent1Geno, parent2Geno) {
-      //  parent1Geno = parent1Geno.split(/\W+/);
-      //  parent2Geno = parent2Geno.split(/\W+/);
-      console.log("rollGeno", parent1Geno, parent2Geno);
-
       // coat colour
       let parent1Coat = {
         rarity: "",
@@ -444,8 +440,8 @@ function roll() {
         });
       }
 
-      console.log("parent1Coat", parent1Coat);
-      console.log("parent2Coat", parent2Coat);
+      //  console.log("parent1Coat", parent1Coat);
+      //  console.log("parent2Coat", parent2Coat);
 
       let coat = "";
       let coatProbabilities = [
@@ -547,8 +543,8 @@ function roll() {
       let parent1Geno = parent1.geno[0].split(/\W+/);
       let parent2Geno = parent2.geno[0].split(/\W+/);
 
-      console.log("parent1Geno", parent1Geno);
-      console.log("parent2Geno", parent2Geno);
+      //  console.log("parent1Geno", parent1Geno);
+      //  console.log("parent2Geno", parent2Geno);
 
       if (parent1.genoSecondary !== "" && rng(100) <= 50) {
         parent1Geno = parent1.genoSecondary[0].split(/\W+/);
@@ -560,18 +556,18 @@ function roll() {
       let geno = [];
       let pheno = [];
       if (chimera || harlequin) {
-        console.log("chimera or harlequin");
+        //    console.log("chimera or harlequin");
         geno = [
           rollGeno(parent1Geno, parent2Geno),
           rollGeno(parent1Geno, parent2Geno),
         ];
         pheno = phenoReader(geno);
       } else {
-        console.log("plain");
+        //    console.log("plain");
         geno = [rollGeno(parent1Geno, parent2Geno)];
         pheno = phenoReader(geno);
       }
-      console.log(chimera, geno, pheno);
+      //  console.log(chimera, geno, pheno);
 
       return `G: ${geno.join(" || ")}
 			P: ${pheno.join(" || ")}`;
