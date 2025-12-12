@@ -412,6 +412,7 @@ function roll() {
     }
 
     function rollGeno(parent1Geno, parent2Geno) {
+      console.log("rollGeno", parent1Geno, parent2Geno);
       // coat colour
       let parent1Coat = {
         rarity: "",
@@ -538,7 +539,7 @@ function roll() {
 
     function handleGenoPheno() {
       let parent1Geno = parent1.geno;
-      let parent2Geno = parent1.geno;
+      let parent2Geno = parent2.geno;
       if (parent1.genoSecondary !== "" && rng(100) <= 50) {
         parent1Geno = parent1.genoSecondary;
       }
@@ -549,16 +550,18 @@ function roll() {
       let geno = [];
       let pheno = [];
       if (chimera || harlequin) {
+        console.log("chimera or harlequin");
         geno = [
           rollGeno(parent1Geno, parent2Geno),
           rollGeno(parent1Geno, parent2Geno),
         ];
         pheno = phenoReader(geno);
       } else {
+        console.log("plain");
         geno = [rollGeno(parent1Geno, parent2Geno)];
         pheno = phenoReader(geno);
       }
-      // console.log(chimera, geno, pheno);
+      console.log(chimera, geno, pheno);
 
       return `G: ${geno.join(" || ")}
 			P: ${pheno.join(" || ")}`;
