@@ -412,7 +412,10 @@ function roll() {
     }
 
     function rollGeno(parent1Geno, parent2Geno) {
+      //  parent1Geno = parent1Geno.split(/\W+/);
+      //  parent2Geno = parent2Geno.split(/\W+/);
       console.log("rollGeno", parent1Geno, parent2Geno);
+
       // coat colour
       let parent1Coat = {
         rarity: "",
@@ -440,6 +443,9 @@ function roll() {
           }
         });
       }
+
+      console.log("parent1Coat", parent1Coat);
+      console.log("parent2Coat", parent2Coat);
 
       let coat = "";
       let coatProbabilities = [
@@ -538,13 +544,17 @@ function roll() {
     }
 
     function handleGenoPheno() {
-      let parent1Geno = parent1.geno;
-      let parent2Geno = parent2.geno;
+      let parent1Geno = parent1.geno[0].split(/\W+/);
+      let parent2Geno = parent2.geno[0].split(/\W+/);
+
+      console.log("parent1Geno", parent1Geno);
+      console.log("parent2Geno", parent2Geno);
+
       if (parent1.genoSecondary !== "" && rng(100) <= 50) {
-        parent1Geno = parent1.genoSecondary;
+        parent1Geno = parent1.genoSecondary[0].split(/\W+/);
       }
       if (parent2.genoSecondary !== "" && rng(100) <= 50) {
-        parent2Geno = parent2.genoSecondary;
+        parent2Geno = parent2.genoSecondary[0].split(/\W+/);
       }
 
       let geno = [];
