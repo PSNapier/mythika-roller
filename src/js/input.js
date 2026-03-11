@@ -122,6 +122,7 @@ dictionary.runes.forEach(rune => addNumberInput(rune));
 const items = [
 	'nero\'s luck',
 	'arativa\'s spirit',
+	'soul apocalypse',
 	'solasdrake',
 	'shadowsdrake',
 	'furion',

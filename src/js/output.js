@@ -1,4 +1,10 @@
 // OUTPUT
+import {
+  checkBloodlinePure,
+  calcLitterAmountPure,
+  phenoReader as phenoReaderPure,
+  rollSkillsRunesPure,
+} from "./roll-logic.js";
 
 function roll() {
   document.getElementById("output").innerHTML = ``;
@@ -68,6 +74,7 @@ function roll() {
       behophoenix: document.getElementById(`behophoenix`).checked,
       runeSpirit: document.getElementById(`runespirit`).checked,
       fertilityElk: document.getElementById(`fertilityelk`).checked,
+      soulApocalypse: document.getElementById(`soulapocalypse`).checked,
       mutationKingsAssistant: document.getElementById(`mutationkingsassistant`)
         .checked,
       unknownMixtureA: document.getElementById(`unknownmixturea`).checked,
@@ -86,43 +93,22 @@ function roll() {
   let harlequin = false;
 
   function checkBloodline() {
-    [parent1, parent2].forEach((parent) => {
-      parent.bloodline = parent.bloodline
-        .filter(Boolean)
-        .filter((ancestor) => !ancestor.includes("A#"));
-    });
-
-    parent1.bloodline.forEach((ancestor) => {
-      if (parent2.bloodline.includes(ancestor)) {
-        inbredIds.push(ancestor);
-        inbred = true;
-      }
-    });
-    // console.log(parent1.bloodline, parent2.bloodline, inbred, inbredIds);
+    const result = checkBloodlinePure(parent1, parent2);
+    parent1.bloodline = result.parent1Bloodline;
+    parent2.bloodline = result.parent2Bloodline;
+    inbred = result.inbred;
+    inbredIds.push(...result.inbredIds);
   }
 
-  function calcLitterAmount() {
-    if (selections.soulApocalypse && rng(100) <= 40) {
-      selectionsUsed.push("soul apocalypse");
-      return 4;
-    } else if (selections.fertilityElk && rng(100) <= 40) {
-      selectionsUsed.push("fertility elk");
-      return 4;
-    }
-
-    if (parent1.rank === "runt" || parent2.rank === "runt") {
-      return rngRange(1, 3);
-    } else if (parent1.rank === "omega" || parent2.rank === "omega") {
-      return rngRange(2, 3);
-    } else if (parent1.rank === "beta" || parent2.rank === "beta") {
-      return rngRange(2, 4);
-    } else if (parent1.rank === "alpha" || parent2.rank === "alpha") {
-      return rngRange(3, 4);
-    }
-
-    return 1;
-  }
-  let litterAmount = calcLitterAmount();
+  const litterResult = calcLitterAmountPure(
+    parent1,
+    parent2,
+    selections,
+    rng,
+    rngRange
+  );
+  let litterAmount = litterResult.amount;
+  if (litterResult.usedItem) selectionsUsed.push(litterResult.usedItem);
 
   function newMythika(mythikaCount) {
     function rollSpecies() {
@@ -398,7 +384,11 @@ function roll() {
       if (output === "harlequin") {
         harlequin = true;
       }
-      if (output !== "chimera" && output !== "harlequin") {
+      if (
+        output !== "chimera" &&
+        output !== "harlequin" &&
+        selectionsUsed.includes("mutation kings assistant")
+      ) {
         selectionsUsed.splice(
           selectionsUsed.indexOf("mutation kings assistant"),
           1
@@ -501,44 +491,6 @@ function roll() {
         .join("/");
     }
 
-    function phenoReader(geno) {
-      let output = [];
-      geno.forEach((geno) => {
-        let genoSplit = geno.split("/");
-
-        let coat = "";
-        for (let key in dictionary.coatColours) {
-          dictionary.coatColours[key].forEach((coatDict) => {
-            if (genoSplit.includes(coatDict[1])) {
-              coat = coatDict[0];
-            }
-          });
-        }
-
-        let markings = [];
-        for (let key in dictionary.markings) {
-          dictionary.markings[key].forEach((markingsDict) => {
-            if (genoSplit.includes(markingsDict[1])) {
-              markings.push(markingsDict[0]);
-            }
-          });
-        }
-
-        let temp = "";
-        if (markings.length > 0) {
-          temp = `${coat.capitalizeStr()} with ${markings
-            .join(", ")
-            .capitalizeStr()}`;
-        } else {
-          temp = `${coat.capitalizeStr()}`;
-        }
-
-        output.push(temp);
-      });
-
-      return output;
-    }
-
     function handleGenoPheno() {
       let parent1Geno = parent1.geno[0].split(/\W+/);
       let parent2Geno = parent2.geno[0].split(/\W+/);
@@ -561,11 +513,11 @@ function roll() {
           rollGeno(parent1Geno, parent2Geno),
           rollGeno(parent1Geno, parent2Geno),
         ];
-        pheno = phenoReader(geno);
+        pheno = phenoReaderPure(geno, dictionary);
       } else {
         //    console.log("plain");
         geno = [rollGeno(parent1Geno, parent2Geno)];
-        pheno = phenoReader(geno);
+        pheno = phenoReaderPure(geno, dictionary);
       }
       //  console.log(chimera, geno, pheno);
 
@@ -574,61 +526,8 @@ function roll() {
     }
 
     function rollSkillsRunes() {
-      let skills = dictionary.skills.reduce((obj, skill) => {
-        obj[skill] = 0;
-        return obj;
-      }, {});
-
-      let runes = dictionary.runes.reduce((obj, rune) => {
-        obj[rune] = 0;
-        return obj;
-      }, {});
-
-      let extraPass = 0;
-      if (selections.runeSpirit) {
-        selectionsUsed.push("rune spirit");
-        extraPass += 10;
-      }
-      if (selections.furion) {
-        skills.attack += 1;
-      }
-      if (selections.shellpin) {
-        skills.defense += 1;
-      }
-      if (selections.stamvaul) {
-        skills.speed += 1;
-      }
-
-      function rollSkillRunes(skillRune) {
-        for (let key in skillRune) {
-          let totalPass = 0;
-          [parent1[key], parent2[key]].forEach((parentKey) => {
-            totalPass += Math.floor(parentKey / 10) + extraPass;
-          });
-          skillRune[key] += totalPass;
-        }
-      }
-      rollSkillRunes(skills);
-      rollSkillRunes(runes);
-
-      let skillsString = Object.entries(skills)
-        .filter(([key, value]) => value !== 0)
-        .map(([key, value]) => `+${value} ${key.capitalizeStr()}`)
-        .join(", ");
-      let runesString = Object.entries(runes)
-        .filter(([key, value]) => value !== 0)
-        .map(([key, value]) => `+${value} ${key.capitalizeStr()}`)
-        .join(", ");
-
-      let output = [];
-      if (skillsString) {
-        output.push(`Skills: ${skillsString}`);
-      }
-      if (runesString) {
-        output.push(`Runes: ${runesString}`);
-      }
-
-      return output.join("\n");
+      if (selections.runeSpirit) selectionsUsed.push("rune spirit");
+      return rollSkillsRunesPure(parent1, parent2, selections, dictionary);
     }
 
     function rollHereditaryTraits() {
@@ -706,3 +605,5 @@ function roll() {
   }
   document.getElementById("output").appendChild(deceasedAlert);
 }
+
+window.roll = roll;
