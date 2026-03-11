@@ -106,6 +106,14 @@ describe('rollSkillsRunesPure', () => {
     expect(result).toContain('+1 Defence');
   });
 
+  it('adds speed from stamvaul', () => {
+    const p1 = { attack: 0, speed: 0, defence: 0, elemancy: 0, medic: 0, dark: 0, void: 0 };
+    const p2 = { attack: 0, speed: 0, defence: 0, elemancy: 0, medic: 0, dark: 0, void: 0 };
+    const selections = { stamvaul: true };
+    const result = rollSkillsRunesPure(p1, p2, selections, dictionary);
+    expect(result).toContain('+1 Speed');
+  });
+
   it('adds attack from furion', () => {
     const p1 = { attack: 0, speed: 0, defence: 0, elemancy: 0, medic: 0, dark: 0, void: 0 };
     const p2 = { attack: 0, speed: 0, defence: 0, elemancy: 0, medic: 0, dark: 0, void: 0 };

@@ -55,4 +55,23 @@ describe('dictionary structure', () => {
     expect(Array.isArray(dictionary.mutations.random)).toBe(true);
     expect(Array.isArray(dictionary.mutations.inbred)).toBe(true);
   });
+
+  it('getSelections keys have matching items/pets (regression: soulApocalypse-style bugs)', () => {
+    const items = [
+      "nero's luck", "arativa's spirit", "soul apocalypse", "solasdrake", "shadowsdrake",
+      "furion", "shellpin", "stamvaul", "tolerance crystal", "unknown mixture a",
+      "unknown mixture b",
+    ];
+    const pets = ["behophoenix", "rune spirit", "fertility elk", "mutation king's assistant"];
+    const toId = (s) => s.replace(/\s/g, "").replace(/'/g, "");
+    const allIds = new Set([...items, ...pets].map(toId));
+    const selectionIds = [
+      "nerosluck", "arativasspirit", "soulapocalypse", "solasdrake", "shadowsdrake",
+      "furion", "shellpin", "stamvaul", "tolerancecrystal", "unknownmixturea",
+      "unknownmixtureb", "behophoenix", "runespirit", "fertilityelk", "mutationkingsassistant",
+    ];
+    for (const id of selectionIds) {
+      expect(allIds.has(id), `Selection id "${id}" has no matching item/pet`).toBe(true);
+    }
+  });
 });

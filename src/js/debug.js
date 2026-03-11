@@ -15,16 +15,6 @@
 
   function randomizeForm() {
     ['parent1', 'parent2'].forEach((parent) => {
-      // Bloodline: 2-4 random short strings
-      const bloodlineParts = [];
-      const count = rngRange(2, 4);
-      const names = ['A', 'B', 'C', 'X', 'Y', 'Z', 'Alpha', 'Beta', 'Delta'];
-      for (let i = 0; i < count; i++) {
-        bloodlineParts.push(randomizer(names));
-      }
-      const bloodlineEl = document.getElementById(`${parent}bloodline`);
-      if (bloodlineEl) bloodlineEl.value = bloodlineParts.join(' ');
-
       // Geno: coat/marking format from dictionary
       const allCoats = getAllOptions(dictionary.coatColours);
       const coat = randomizer(allCoats);
